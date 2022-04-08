@@ -48,6 +48,8 @@ public class CarController : MonoBehaviour
     public bool touchingGround;
     //private float distToGround = 0.505f;
 
+    [SerializeField] private bool dragExists;
+    [SerializeField] private float dragMultiple;
     double mph;
     private float engineRPM;
     [SerializeField] private float minRPM;
@@ -373,6 +375,14 @@ public class CarController : MonoBehaviour
 
     private void HandleMotor()
     {
+        if (dragExists)
+        {
+            carRigidBody.drag = carRigidBody.velocity.magnitude / dragMultiple;
+        }
+        else
+        {
+            carRigidBody.drag = 0f;
+        }
         switch (motorSelection)
         {
             case 0:

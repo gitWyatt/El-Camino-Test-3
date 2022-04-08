@@ -13971,6 +13971,8 @@ MonoBehaviour:
   isBraking: 0
   isReversing: 0
   touchingGround: 0
+  dragExists: 1
+  dragMultiple: 100000
   minRPM: 1000
   maxRPM: 3000
   bodySelection: 0
