@@ -15,11 +15,56 @@ public class CarEffects : MonoBehaviour
     [SerializeField] public GameObject frBigWheel;
     [SerializeField] public GameObject rlBigWheel;
     [SerializeField] public GameObject rrBigWheel;
-
-    [SerializeField] public TrailRenderer leftAkiraTrailCamino;
-    [SerializeField] public TrailRenderer rightAkiraTrailCamino;
-    [SerializeField] public TrailRenderer leftAkiraTrailAE86;
-    [SerializeField] public TrailRenderer rightAkiraTrailAE86;
+    [Space]
+    [Header("Trail Lights")]
+    [SerializeField] public TrailRenderer leftTrailBMWM1;
+    [SerializeField] public TrailRenderer rightTrailBMWM1;
+    [SerializeField] public TrailRenderer leftTrailBMWM3;
+    [SerializeField] public TrailRenderer rightTrailBMWM3;
+    [SerializeField] public TrailRenderer leftTrailCamaroZ28;
+    [SerializeField] public TrailRenderer rightTrailCamaroZ28;
+    [SerializeField] public TrailRenderer leftTrailChevyBelAir;
+    [SerializeField] public TrailRenderer rightTrailChevyBelAir;
+    [SerializeField] public TrailRenderer leftTrailDatsun240Z;
+    [SerializeField] public TrailRenderer rightTrailDatsun240Z;
+    [SerializeField] public TrailRenderer leftTrailDodgeHellcat;
+    [SerializeField] public TrailRenderer rightTrailDodgeHellcat;
+    [SerializeField] public TrailRenderer leftTrailElCamino;
+    [SerializeField] public TrailRenderer rightTrailElCamino;
+    [SerializeField] public TrailRenderer leftTrailFerrariF40;
+    [SerializeField] public TrailRenderer rightTrailFerrariF40;
+    [SerializeField] public TrailRenderer leftTrailFerrariLaferrari;
+    [SerializeField] public TrailRenderer rightTrailFerrariLaferrari;
+    [SerializeField] public TrailRenderer leftTrailFumigator;
+    [SerializeField] public TrailRenderer rightTrailFumigator;
+    [SerializeField] public TrailRenderer leftTrailHondaCivic;
+    [SerializeField] public TrailRenderer rightTrailHondaCivic;
+    [SerializeField] public TrailRenderer leftTrailHondaS2000;
+    [SerializeField] public TrailRenderer rightTrailHondaS2000;
+    [SerializeField] public TrailRenderer leftTrailMazdaRX7;
+    [SerializeField] public TrailRenderer rightTrailMazdaRX7;
+    [SerializeField] public TrailRenderer leftTrailMustangShelby;
+    [SerializeField] public TrailRenderer rightTrailMustangShelby;
+    [SerializeField] public TrailRenderer leftTrailNissan300ZX;
+    [SerializeField] public TrailRenderer rightTrailNissan300ZX;
+    [SerializeField] public TrailRenderer leftTrailPontiacGTO;
+    [SerializeField] public TrailRenderer rightTrailPontiacGTO;
+    [SerializeField] public TrailRenderer leftTrailPorsche918;
+    [SerializeField] public TrailRenderer rightTrailPorsche918;
+    [SerializeField] public TrailRenderer leftTrailSkylineGTR;
+    [SerializeField] public TrailRenderer rightTrailSkylineGTR;
+    [SerializeField] public TrailRenderer leftTrailToyotaAE86;
+    [SerializeField] public TrailRenderer rightTrailToyotaAE86;
+    [SerializeField] public TrailRenderer leftTrailToyotaMR2;
+    [SerializeField] public TrailRenderer rightTrailToyotaMR2;
+    [SerializeField] public TrailRenderer leftTrailToyotaSupra;
+    [SerializeField] public TrailRenderer rightTrailToyotaSupra;
+    [SerializeField] public TrailRenderer leftTrailWRXSTI;
+    [SerializeField] public TrailRenderer rightTrailWRXSTI;
+    //[SerializeField] public TrailRenderer leftAkiraTrailCamino;
+    //[SerializeField] public TrailRenderer rightAkiraTrailCamino;
+    //[SerializeField] public TrailRenderer leftAkiraTrailAE86;
+    //[SerializeField] public TrailRenderer rightAkiraTrailAE86;
 
     [SerializeField] public ParticleSystem thruster;
 
@@ -29,9 +74,60 @@ public class CarEffects : MonoBehaviour
     [SerializeField] public GameObject ae86TailLightGroup;
     [SerializeField] public Transform leftTailLightAE86;
     [SerializeField] public Transform rightTailLightAE86;
+    [Space]
+    [Header("Taillight groups")]
+    [SerializeField] public GameObject bMWM1TLGroup;
+    [SerializeField] public GameObject bMWM3TLGroup;
+    [SerializeField] public GameObject cameroZ28TLGroup;
+    [SerializeField] public GameObject chevyBelAirTLGroup;
+    [SerializeField] public GameObject datsun240ZTLGroup;
+    [SerializeField] public GameObject dodgeHellcatTLGroup;
+    [SerializeField] public GameObject elCaminoTLGroup;
+    [SerializeField] public GameObject ferrariF40TLGroup;
+    [SerializeField] public GameObject ferrariLaferrariTLGroup;
+    [SerializeField] public GameObject fumigatorTLGroup;
+    [SerializeField] public GameObject hondaCivicTLGroup;
+    [SerializeField] public GameObject hondaS2000TLGroup;
+    [SerializeField] public GameObject mazdaRX7TLGroup;
+    [SerializeField] public GameObject mustangShelbyTLGroup;
+    [SerializeField] public GameObject nissan300ZXTLGroup;
+    [SerializeField] public GameObject pontiacGTOTLGroup;
+    [SerializeField] public GameObject porsche918TLGroup;
+    [SerializeField] public GameObject skylineGTRTLGroup;
+    [SerializeField] public GameObject toyotaAE86TLGroup;
+    [SerializeField] public GameObject toyotaMR2TLGroup;
+    [SerializeField] public GameObject toyotaSupraTLGroup;
+    [SerializeField] public GameObject wRXSTITLGroup;
+    [Space]
+    [Header("Taillights")]
+    [SerializeField] public Transform bMWM1TL;
+    [SerializeField] public Transform bMWM3TL;
+    [SerializeField] public Transform cameroZ28TL;
+    [SerializeField] public Transform chevyBelAirTL;
+    [SerializeField] public Transform datsun240ZTL;
+    [SerializeField] public Transform dodgeHellcatTL;
+    [SerializeField] public Transform elCaminoTL;
+    [SerializeField] public Transform ferrariF40TL;
+    [SerializeField] public Transform ferrariLaferrariTL;
+    [SerializeField] public Transform fumigatorTL;
+    [SerializeField] public Transform hondaCivicTL;
+    [SerializeField] public Transform hondaS2000TL;
+    [SerializeField] public Transform mazdaRX7TL;
+    [SerializeField] public Transform mustangShelbyTL;
+    [SerializeField] public Transform nissan300ZXTL;
+    [SerializeField] public Transform pontiacGTOTL;
+    [SerializeField] public Transform porsche918TL;
+    [SerializeField] public Transform skylineGTRTL;
+    [SerializeField] public Transform toyotaAE86TL;
+    [SerializeField] public Transform toyotaMR2TL;
+    [SerializeField] public Transform toyotaSupraTL;
+    [SerializeField] public Transform wRXSTITL;
+    [Space]
 
     public Renderer leftTailLightRenderer;
     public Renderer rightTailLightRenderer;
+
+    public Renderer tailLightRenderer;
 
     [SerializeField] public GameObject airThrusters;
     [SerializeField] public GameObject groundBoosters;
@@ -43,13 +139,56 @@ public class CarEffects : MonoBehaviour
 
     [SerializeField] public GameObject hydraulics;
 
+    [Space]
+    [Header("body meshes")]
     [SerializeField] private Mesh elCaminoMesh;
-    [SerializeField] private Material elCaminoPaint;
     [SerializeField] private Mesh fumigatorMesh;
-    [SerializeField] private Material fumigatorPaint;
     [SerializeField] private Mesh ae86Mesh;
+    [SerializeField] private Mesh BMWM1Mesh;
+    [SerializeField] private Mesh BMWM3Mesh;
+    [SerializeField] private Mesh camaroZ28Mesh;
+    [SerializeField] private Mesh chevyBelAirMesh;
+    [SerializeField] private Mesh datsun240ZMesh;
+    [SerializeField] private Mesh dodgeHellcatMesh;
+    [SerializeField] private Mesh ferrariF40Mesh;
+    [SerializeField] private Mesh ferrariLaferrariMesh;
+    [SerializeField] private Mesh hondaCivicMesh;
+    [SerializeField] private Mesh hondaS2000Mesh;
+    [SerializeField] private Mesh mazdaRX7Mesh;
+    [SerializeField] private Mesh toyotaMR2Mesh;
+    [SerializeField] private Mesh mustangShelbyMesh;
+    [SerializeField] private Mesh nissan300ZXMesh;
+    [SerializeField] private Mesh pontiacGTOMesh;
+    [SerializeField] private Mesh porsche918Mesh;
+    [SerializeField] private Mesh skylineGTRMesh;
+    [SerializeField] private Mesh toyotaSupraMesh;
+    [SerializeField] private Mesh wrxSTIMesh;
+    [Space]
+    [Header("body paint")]
+    [SerializeField] private Material elCaminoPaint;
+    [SerializeField] private Material fumigatorPaint;
     [SerializeField] private Material ae86Paint;
-
+    [SerializeField] private Material BMWM1Paint;
+    [SerializeField] private Material BMWM3Paint;
+    [SerializeField] private Material camaroZ28Paint;
+    [SerializeField] private Material chevyBelAirPaint;
+    [SerializeField] private Material datsun240ZPaint;
+    [SerializeField] private Material dodgeHellcatPaint;
+    [SerializeField] private Material ferrariF40Paint;
+    [SerializeField] private Material ferrariLaferrariPaint;
+    [SerializeField] private Material hondaCivicPaint;
+    [SerializeField] private Material hondaS2000Paint;
+    [SerializeField] private Material mazdaRX7Paint;
+    [SerializeField] private Material toyotaMR2Paint;
+    [SerializeField] private Material mustangShelbyPaint;
+    [SerializeField] private Material nissan300ZXPaint;
+    [SerializeField] private Material pontiacGTOPaint;
+    [SerializeField] private Material porsche918Paint;
+    [SerializeField] private Material skylineGTRPaint;
+    [SerializeField] private Material toyotaSupraPaint;
+    [SerializeField] private Material wrxSTIPaint;
+    [Space]
+    [Header("Tire Meshes and Paint")]
     [SerializeField] private Mesh offRoadTireMesh;
     [SerializeField] private Material offRoadTirePaint;
     [SerializeField] private Mesh driftTireMesh;
@@ -83,7 +222,7 @@ public class CarEffects : MonoBehaviour
 
     public bool wingsOpen = false;
 
-    public int bodySelection;
+    //public int bodySelection;
 
     [SerializeField] float sideSlipThreshold;
     [SerializeField] float frontSlipThreshold;
@@ -113,12 +252,18 @@ public class CarEffects : MonoBehaviour
 
     [SerializeField] public TrailRenderer backLeftBigFireMarks;
     [SerializeField] public TrailRenderer backRightBigFireMarks;
+    
+
 
     private void Awake()
     {
         carController = GameObject.Find("Camino").GetComponent<CarController>();
         var thrusterEmission = thruster.emission;
         thrusterEmission.enabled = false;
+        
+        var tailLightRenderer = elCaminoTL.GetComponent<MeshRenderer>();
+        tailLightRenderer.enabled = true;
+
         var leftTailLightRenderer = leftTailLight.GetComponent<MeshRenderer>();
         var rightTailLightRenderer = rightTailLight.GetComponent<MeshRenderer>();
         leftTailLightRenderer.enabled = false;
@@ -131,6 +276,7 @@ public class CarEffects : MonoBehaviour
         CheckDrift();
         CheckBoost();
         CheckLights();
+        Debug.Log(PlayerPrefs.GetInt("bodyIndex"));
     }
 
     private void CheckTransforms()
@@ -196,8 +342,7 @@ public class CarEffects : MonoBehaviour
         }
     }
 
-    private void CheckDrift()
-    {
+    private void CheckDrift()    {
         carController.frontLeftWheelCollider.GetGroundHit(out WheelHit wheelDataFL);
         sideSlipFL = wheelDataFL.sidewaysSlip;
         frontSlipFL = wheelDataFL.forwardSlip;
@@ -336,27 +481,146 @@ public class CarEffects : MonoBehaviour
     }
     private void startAkiraTrail()
     {
-        switch (bodySelection)
+        switch (PlayerPrefs.GetInt("bodyIndex"))
         {
             case 0:
                 if (akiraTrailFlag) return;
-                leftAkiraTrailCamino.emitting = true;
-                rightAkiraTrailCamino.emitting = true;
+                leftTrailBMWM1.emitting = true;
+                rightTrailBMWM1.emitting = true;
                 akiraTrailFlag = true;
                 break;
             case 1:
                 if (akiraTrailFlag) return;
-                leftAkiraTrailCamino.emitting = true;
-                rightAkiraTrailCamino.emitting = true;
+                leftTrailBMWM3.emitting = true;
+                rightTrailBMWM3.emitting = true;
                 akiraTrailFlag = true;
                 break;
             case 2:
                 if (akiraTrailFlag) return;
-                leftAkiraTrailAE86.emitting = true;
-                rightAkiraTrailAE86.emitting = true;
+                leftTrailCamaroZ28.emitting = true;
+                rightTrailCamaroZ28.emitting = true;
                 akiraTrailFlag = true;
                 break;
+            case 3:
+                if (akiraTrailFlag) return;
+                leftTrailChevyBelAir.emitting = true;
+                rightTrailChevyBelAir.emitting = true;
+                akiraTrailFlag = true;
+                break;
+            case 4:
+                if (akiraTrailFlag) return;
+                leftTrailDatsun240Z.emitting = true;
+                rightTrailDatsun240Z.emitting = true;
+                akiraTrailFlag = true;
+                break;
+            case 5:
+                if (akiraTrailFlag) return;
+                leftTrailDodgeHellcat.emitting = true;
+                rightTrailDodgeHellcat.emitting = true;
+                akiraTrailFlag = true;
+                break;
+            case 6:
+                if (akiraTrailFlag) return;
+                leftTrailElCamino.emitting = true;
+                rightTrailElCamino.emitting = true;
+                akiraTrailFlag = true;
+                break;
+            case 7:
+                if (akiraTrailFlag) return;
+                leftTrailFerrariF40.emitting = true;
+                rightTrailFerrariF40.emitting = true;
+                akiraTrailFlag = true;
+                break;
+            case 8:
+                if (akiraTrailFlag) return;
+                leftTrailFerrariLaferrari.emitting = true;
+                rightTrailFerrariLaferrari.emitting = true;
+                akiraTrailFlag = true;
+                break;
+            case 9:
+                if (akiraTrailFlag) return;
+                leftTrailFumigator.emitting = true;
+                rightTrailFumigator.emitting = true;
+                akiraTrailFlag = true;
+                break;
+            case 10:
+                if (akiraTrailFlag) return;
+                leftTrailHondaCivic.emitting = true;
+                rightTrailHondaCivic.emitting = true;
+                akiraTrailFlag = true;
+                break;
+            case 11:
+                if (akiraTrailFlag) return;
+                leftTrailHondaS2000.emitting = true;
+                rightTrailHondaS2000.emitting = true;
+                akiraTrailFlag = true;
+                break;
+            case 12:
+                if (akiraTrailFlag) return;
+                leftTrailMazdaRX7.emitting = true;
+                rightTrailMazdaRX7.emitting = true;
+                akiraTrailFlag = true;
+                break;
+            case 13:
+                if (akiraTrailFlag) return;
+                leftTrailMustangShelby.emitting = true;
+                rightTrailMustangShelby.emitting = true;
+                akiraTrailFlag = true;
+                break;
+            case 14:
+                if (akiraTrailFlag) return;
+                leftTrailNissan300ZX.emitting = true;
+                rightTrailNissan300ZX.emitting = true;
+                akiraTrailFlag = true;
+                break;
+            case 15:
+                if (akiraTrailFlag) return;
+                leftTrailPontiacGTO.emitting = true;
+                rightTrailPontiacGTO.emitting = true;
+                akiraTrailFlag = true;
+                break;
+            case 16:
+                if (akiraTrailFlag) return;
+                leftTrailPorsche918.emitting = true;
+                rightTrailPorsche918.emitting = true;
+                akiraTrailFlag = true;
+                break;
+            case 17:
+                if (akiraTrailFlag) return;
+                leftTrailSkylineGTR.emitting = true;
+                rightTrailSkylineGTR.emitting = true;
+                akiraTrailFlag = true;
+                break;
+            case 18:
+                if (akiraTrailFlag) return;
+                leftTrailToyotaAE86.emitting = true;
+                rightTrailToyotaAE86.emitting = true;
+                akiraTrailFlag = true;
+                break;
+            case 19:
+                if (akiraTrailFlag) return;
+                leftTrailToyotaMR2.emitting = true;
+                rightTrailToyotaMR2.emitting = true;
+                akiraTrailFlag = true;
+                break;
+            case 20:
+                if (akiraTrailFlag) return;
+                leftTrailToyotaSupra.emitting = true;
+                rightTrailToyotaSupra.emitting = true;
+                akiraTrailFlag = true;
+                break;
+            case 21:
+                if (akiraTrailFlag) return;
+                leftTrailWRXSTI.emitting = true;
+                rightTrailWRXSTI.emitting = true;
+                akiraTrailFlag = true;
+                break;
+            default:
+                akiraTrailFlag = false;
+                break;
         }
+
+
         //if (akiraTrailFlag) return;
         //leftAkiraTrail.emitting = true;
         //rightAkiraTrail.emitting = true;
@@ -364,27 +628,171 @@ public class CarEffects : MonoBehaviour
     }
     private void stopAkiraTrail()
     {
-        switch (bodySelection)
+        switch (PlayerPrefs.GetInt("bodyIndex"))
         {
             case 0:
                 if (!akiraTrailFlag) return;
-                leftAkiraTrailCamino.emitting = false;
-                rightAkiraTrailCamino.emitting = false;
+                leftTrailBMWM1.emitting = false;
+                rightTrailBMWM1.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 1:
                 if (!akiraTrailFlag) return;
-                leftAkiraTrailCamino.emitting = false;
-                rightAkiraTrailCamino.emitting = false;
+                leftTrailBMWM3.emitting = false;
+                rightTrailBMWM3.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 2:
                 if (!akiraTrailFlag) return;
-                leftAkiraTrailAE86.emitting = false;
-                rightAkiraTrailAE86.emitting = false;
+                leftTrailCamaroZ28.emitting = false;
+                rightTrailCamaroZ28.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 3:
+                if (!akiraTrailFlag) return;
+                leftTrailChevyBelAir.emitting = false;
+                rightTrailChevyBelAir.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 4:
+                if (!akiraTrailFlag) return;
+                leftTrailDatsun240Z.emitting = false;
+                rightTrailDatsun240Z.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 5:
+                if (!akiraTrailFlag) return;
+                leftTrailDodgeHellcat.emitting = false;
+                rightTrailDodgeHellcat.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 6:
+                if (!akiraTrailFlag) return;
+                leftTrailElCamino.emitting = false;
+                rightTrailElCamino.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 7:
+                if (!akiraTrailFlag) return;
+                leftTrailFerrariF40.emitting = false;
+                rightTrailFerrariF40.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 8:
+                if (!akiraTrailFlag) return;
+                leftTrailFerrariLaferrari.emitting = false;
+                rightTrailFerrariLaferrari.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 9:
+                if (!akiraTrailFlag) return;
+                leftTrailFumigator.emitting = false;
+                rightTrailFumigator.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 10:
+                if (!akiraTrailFlag) return;
+                leftTrailHondaCivic.emitting = false;
+                rightTrailHondaCivic.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 11:
+                if (!akiraTrailFlag) return;
+                leftTrailHondaS2000.emitting = false;
+                rightTrailHondaS2000.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 12:
+                if (!akiraTrailFlag) return;
+                leftTrailMazdaRX7.emitting = false;
+                rightTrailMazdaRX7.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 13:
+                if (!akiraTrailFlag) return;
+                leftTrailMustangShelby.emitting = false;
+                rightTrailMustangShelby.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 14:
+                if (!akiraTrailFlag) return;
+                leftTrailNissan300ZX.emitting = false;
+                rightTrailNissan300ZX.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 15:
+                if (!akiraTrailFlag) return;
+                leftTrailPontiacGTO.emitting = false;
+                rightTrailPontiacGTO.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 16:
+                if (!akiraTrailFlag) return;
+                leftTrailPorsche918.emitting = false;
+                rightTrailPorsche918.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 17:
+                if (!akiraTrailFlag) return;
+                leftTrailSkylineGTR.emitting = false;
+                rightTrailSkylineGTR.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 18:
+                if (!akiraTrailFlag) return;
+                leftTrailToyotaAE86.emitting = false;
+                rightTrailToyotaAE86.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 19:
+                if (!akiraTrailFlag) return;
+                leftTrailToyotaMR2.emitting = false;
+                rightTrailToyotaMR2.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 20:
+                if (!akiraTrailFlag) return;
+                leftTrailToyotaSupra.emitting = false;
+                rightTrailToyotaSupra.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 21:
+                if (!akiraTrailFlag) return;
+                leftTrailWRXSTI.emitting = false;
+                rightTrailWRXSTI.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            default:
                 akiraTrailFlag = false;
                 break;
         }
+
+        //switch (PlayerPrefs.GetInt("bodyIndex"))
+        //{
+        //    case 0:
+        //        if (!akiraTrailFlag) return;
+        //        leftAkiraTrailCamino.emitting = false;
+        //        rightAkiraTrailCamino.emitting = false;
+        //        akiraTrailFlag = false;
+        //        break;
+        //    case 1:
+        //        if (!akiraTrailFlag) return;
+        //        leftAkiraTrailCamino.emitting = false;
+        //        rightAkiraTrailCamino.emitting = false;
+        //        akiraTrailFlag = false;
+        //        break;
+        //    case 2:
+        //        if (!akiraTrailFlag) return;
+        //        leftAkiraTrailAE86.emitting = false;
+        //        rightAkiraTrailAE86.emitting = false;
+        //        akiraTrailFlag = false;
+        //        break;
+        //    default:
+        //        akiraTrailFlag = false;
+        //        break;
+        //}
+
+
         //if (!akiraTrailFlag) return;
         //leftAkiraTrail.emitting = false;
         //rightAkiraTrail.emitting = false;
@@ -407,38 +815,599 @@ public class CarEffects : MonoBehaviour
 
     private void CheckLights()
     {
-        switch (bodySelection)
+        switch (PlayerPrefs.GetInt("bodyIndex"))
         {
             case 0:
-                leftTailLightRenderer = leftTailLight.GetComponent<MeshRenderer>();
-                rightTailLightRenderer = rightTailLight.GetComponent<MeshRenderer>();
-                caminoTailLightGroup.SetActive(true);
-                ae86TailLightGroup.SetActive(false);
+                tailLightRenderer = bMWM1TL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(true);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
                 break;
             case 1:
-                leftTailLightRenderer = leftTailLight.GetComponent<MeshRenderer>();
-                rightTailLightRenderer = rightTailLight.GetComponent<MeshRenderer>();
-                caminoTailLightGroup.SetActive(true);
-                ae86TailLightGroup.SetActive(false);
+                tailLightRenderer = bMWM3TL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(true);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
                 break;
             case 2:
-                leftTailLightRenderer = leftTailLightAE86.GetComponent<MeshRenderer>();
-                rightTailLightRenderer = rightTailLightAE86.GetComponent<MeshRenderer>();
-                caminoTailLightGroup.SetActive(false);
-                ae86TailLightGroup.SetActive(true);
+                tailLightRenderer = cameroZ28TL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(true);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                break;
+            case 3:
+                tailLightRenderer = chevyBelAirTL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(true);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                break;
+            case 4:
+                tailLightRenderer = datsun240ZTL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(true);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                break;
+            case 5:
+                tailLightRenderer = dodgeHellcatTL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(true);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                break;
+            case 6:
+                tailLightRenderer = elCaminoTL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(true);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                break;
+            case 7:
+                tailLightRenderer = ferrariF40TL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(true);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                break;
+            case 8:
+                tailLightRenderer = ferrariLaferrariTL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(true);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                break;
+            case 9:
+                tailLightRenderer = fumigatorTL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(true);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                break;
+            case 10:
+                tailLightRenderer = hondaCivicTL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(true);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                break;
+            case 11:
+                tailLightRenderer = hondaS2000TL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(true);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                break;
+            case 12:
+                tailLightRenderer = mazdaRX7TL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(true);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                break;
+            case 13:
+                tailLightRenderer = mustangShelbyTL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(true);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                break;
+            case 14:
+                tailLightRenderer = nissan300ZXTL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(true);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                break;
+            case 15:
+                tailLightRenderer = pontiacGTOTL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(true);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                break;
+            case 16:
+                tailLightRenderer = porsche918TL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(true);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                break;
+            case 17:
+                tailLightRenderer = skylineGTRTL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(true);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                break;
+            case 18:
+                tailLightRenderer = toyotaAE86TL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(true);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                break;
+            case 19:
+                tailLightRenderer = toyotaMR2TL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(true);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                break;
+            case 20:
+                tailLightRenderer = toyotaSupraTL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(true);
+                wRXSTITLGroup.SetActive(false);
+                break;
+            case 21:
+                tailLightRenderer = wRXSTITL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(true);
                 break;
         }
 
+        //switch (bodySelection)
+        //{
+        //    case 0:
+        //        leftTailLightRenderer = leftTailLight.GetComponent<MeshRenderer>();
+        //        rightTailLightRenderer = rightTailLight.GetComponent<MeshRenderer>();
+        //        caminoTailLightGroup.SetActive(true);
+        //        ae86TailLightGroup.SetActive(false);
+        //        leftAkiraTrailCamino.emitting = false;
+        //        rightAkiraTrailCamino.emitting = false;
+        //        break;
+        //    case 1:
+        //        leftTailLightRenderer = leftTailLight.GetComponent<MeshRenderer>();
+        //        rightTailLightRenderer = rightTailLight.GetComponent<MeshRenderer>();
+        //        caminoTailLightGroup.SetActive(true);
+        //        ae86TailLightGroup.SetActive(false);
+        //        leftAkiraTrailCamino.emitting = false;
+        //        rightAkiraTrailCamino.emitting = false;
+        //        break;
+        //    case 2:
+        //        leftTailLightRenderer = leftTailLightAE86.GetComponent<MeshRenderer>();
+        //        rightTailLightRenderer = rightTailLightAE86.GetComponent<MeshRenderer>();
+        //        caminoTailLightGroup.SetActive(false);
+        //        ae86TailLightGroup.SetActive(true);
+        //        leftAkiraTrailAE86.emitting = false;
+        //        rightAkiraTrailAE86.emitting = false;
+        //        break;
+        //}
+
         if (carController.isBraking || carController.isReversing || akiraTrailFlag)
         {
-            
-            leftTailLightRenderer.enabled = true;
-            rightTailLightRenderer.enabled = true;
+            tailLightRenderer.enabled = true;
+            //leftTailLightRenderer.enabled = true;
+            //rightTailLightRenderer.enabled = true;
         }
         else
         {
-            leftTailLightRenderer.enabled = false;
-            rightTailLightRenderer.enabled = false;
+            tailLightRenderer.enabled = false;
+            //leftTailLightRenderer.enabled = false;
+            //rightTailLightRenderer.enabled = false;
         }
     }
 
@@ -466,6 +1435,7 @@ public class CarEffects : MonoBehaviour
         }
     }
 
+    /*
     public void SetBodyElCamino()
     {
         carBody.GetComponent<MeshFilter>().mesh = elCaminoMesh;
@@ -490,6 +1460,102 @@ public class CarEffects : MonoBehaviour
         leftAkiraTrailAE86.emitting = false;
         rightAkiraTrailAE86.emitting = false;
     }
+    public void SetBodyBMWM1()
+    {
+        carBody.GetComponent<MeshFilter>().mesh = BMWM1Mesh;
+        carBody.GetComponent<Renderer>().material = BMWM1Paint;
+    }
+    public void SetBodyBMWM3()
+    {
+        carBody.GetComponent<MeshFilter>().mesh = BMWM3Mesh;
+        carBody.GetComponent<Renderer>().material = BMWM3Paint;
+    }
+    public void SetBodyCamaroZ28()
+    {
+        carBody.GetComponent<MeshFilter>().mesh = camaroZ28Mesh;
+        carBody.GetComponent<Renderer>().material = camaroZ28Paint;
+    }
+    public void SetBodyChevyBelAir()
+    {
+        carBody.GetComponent<MeshFilter>().mesh = chevyBelAirMesh;
+        carBody.GetComponent<Renderer>().material = chevyBelAirPaint;
+    }
+    public void SetBodyDatsun240Z()
+    {
+        carBody.GetComponent<MeshFilter>().mesh = datsun240ZMesh;
+        carBody.GetComponent<Renderer>().material = datsun240ZPaint;
+    }
+    public void SetBodyDodgeHellcat()
+    {
+        carBody.GetComponent<MeshFilter>().mesh = dodgeHellcatMesh;
+        carBody.GetComponent<Renderer>().material = dodgeHellcatPaint;
+    }
+    public void SetBodyFerrariF40()
+    {
+        carBody.GetComponent<MeshFilter>().mesh = ferrariF40Mesh;
+        carBody.GetComponent<Renderer>().material = ferrariF40Paint;
+    }
+    public void SetBodyFerrariLaferrari()
+    {
+        carBody.GetComponent<MeshFilter>().mesh = ferrariLaferrariMesh;
+        carBody.GetComponent<Renderer>().material = ferrariLaferrariPaint;
+    }
+    public void SetBodyHondaCivic()
+    {
+        carBody.GetComponent<MeshFilter>().mesh = hondaCivicMesh;
+        carBody.GetComponent<Renderer>().material = hondaCivicPaint;
+    }
+    public void SetBodyHondaS2000()
+    {
+        carBody.GetComponent<MeshFilter>().mesh = hondaS2000Mesh;
+        carBody.GetComponent<Renderer>().material = hondaS2000Paint;
+    }
+    public void SetBodyMazdaRX7()
+    {
+        carBody.GetComponent<MeshFilter>().mesh = mazdaRX7Mesh;
+        carBody.GetComponent<Renderer>().material = mazdaRX7Paint;
+    }
+    public void SetBodyToyotaMR2()
+    {
+        carBody.GetComponent<MeshFilter>().mesh = toyotaMR2Mesh;
+        carBody.GetComponent<Renderer>().material = toyotaMR2Paint;
+    }
+    public void SetBodyMustangShelby()
+    {
+        carBody.GetComponent<MeshFilter>().mesh = mustangShelbyMesh;
+        carBody.GetComponent<Renderer>().material = mustangShelbyPaint;
+    }
+    public void SetBodyNissan300ZX()
+    {
+        carBody.GetComponent<MeshFilter>().mesh = nissan300ZXMesh;
+        carBody.GetComponent<Renderer>().material = nissan300ZXPaint;
+    }
+    public void SetBodyPontiacGTO()
+    {
+        carBody.GetComponent<MeshFilter>().mesh = pontiacGTOMesh;
+        carBody.GetComponent<Renderer>().material = pontiacGTOPaint;
+    }
+    public void SetBodyPorsche918()
+    {
+        carBody.GetComponent<MeshFilter>().mesh = porsche918Mesh;
+        carBody.GetComponent<Renderer>().material = porsche918Paint;
+    }
+    public void SetBodySkylineGTR()
+    {
+        carBody.GetComponent<MeshFilter>().mesh = skylineGTRMesh;
+        carBody.GetComponent<Renderer>().material = skylineGTRPaint;
+    }
+    public void SetBodyToyotaSupra()
+    {
+        carBody.GetComponent<MeshFilter>().mesh = toyotaSupraMesh;
+        carBody.GetComponent<Renderer>().material = toyotaSupraPaint;
+    }
+    public void SetBodyWRXSTI()
+    {
+        carBody.GetComponent<MeshFilter>().mesh = wrxSTIMesh;
+        carBody.GetComponent<Renderer>().material = wrxSTIPaint;
+    }
+    */
 
     public void SetOffRoadTire()
     {

@@ -15,10 +15,15 @@ public class PauseMenu : MonoBehaviour
 
     CarEffects carEffects;
 
+    CarBodySelection carBodySelection;
+
     [SerializeField] CinemachineVirtualCamera CMCamera;
     CinemachineTransposer cameraTransposer;
 
     public GameObject pauseMenuUI;
+
+    public GameObject carBodySelectionWindow;
+    public GameObject carBodyFirstButton;
 
     public GameObject pauseFirstButton;
 
@@ -59,6 +64,7 @@ public class PauseMenu : MonoBehaviour
 
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
+
     }
 
     private void OnEnable()
@@ -71,8 +77,8 @@ public class PauseMenu : MonoBehaviour
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
 
-        int body = PlayerPrefs.GetInt("bodyIndex", 0);
-        BodyDropDown.value = body;
+        //int body = PlayerPrefs.GetInt("bodyIndex", 0);
+        //BodyDropDown.value = body;
 
         int camera = PlayerPrefs.GetInt("cameraIndex", 1);
         CameraDropDown.value = camera;
@@ -141,7 +147,7 @@ public class PauseMenu : MonoBehaviour
         int useButton = PlayerPrefs.GetInt("useButtonIndex", 0);
         UseButtonDropDown.value = useButton;
 
-        Debug.Log(fps);
+        //Debug.Log(fps);
     }
 
     private void Update()
@@ -189,6 +195,14 @@ public class PauseMenu : MonoBehaviour
         //Debug.Log("step 3");
     }
 
+    public void OpenCarBodySelect()
+    {
+        carBodySelectionWindow.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(carBodyFirstButton);
+        pauseMenuUI.SetActive(false);
+    }
+
 
     public void LoadDirtTrack()
     {
@@ -219,29 +233,29 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene(5);
     }
 
-    public void SetBody(int bodyIndex)
-    {
-        switch (bodyIndex)
-        {
-            case 0:
-                carController.bodySelection = 0;
-                carEffects.bodySelection = 0;
-                carEffects.SetBodyElCamino();
-                break;
-            case 1:
-                carController.bodySelection = 1;
-                carEffects.bodySelection = 1;
-                carEffects.SetBodyFumigator();
-                break;
-            case 2:
-                carController.bodySelection = 2;
-                carEffects.bodySelection = 2;
-                carEffects.SetBodyAE86();
-                break;
-        }
+    //public void SetBody(int bodyIndex)
+    //{
+    //    switch (bodyIndex)
+    //    {
+    //        case 0:
+    //            carController.bodySelection = 0;
+    //            carEffects.bodySelection = 0;
+    //            //carEffects.SetBodyElCamino();
+    //            break;
+    //        case 1:
+    //            carController.bodySelection = 1;
+    //            carEffects.bodySelection = 1;
+    //            //carEffects.SetBodyFumigator();
+    //            break;
+    //        case 2:
+    //            carController.bodySelection = 2;
+    //            carEffects.bodySelection = 2;
+    //            //carEffects.SetBodyAE86();
+    //            break;
+    //    }
+    //    PlayerPrefs.SetInt("bodyIndex", bodyIndex);
+    //}
 
-        PlayerPrefs.SetInt("bodyIndex", bodyIndex);
-    }
     public void SetCamera(int cameraIndex)
     {
         cameraTransposer = CMCamera.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineOrbitalTransposer>();

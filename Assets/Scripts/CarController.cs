@@ -10,6 +10,8 @@ public class CarController : MonoBehaviour
 {
     CarEffects carEffects;
 
+    CarBodySelection carBodySelection;
+
     public InputMaster controls;
 
     public Transform centerOfMassCenterAir;
@@ -58,8 +60,6 @@ public class CarController : MonoBehaviour
     private float gearNumber = 6f;
     private float[] gearRatio = new float[] { 2.66f, 1.78f, 1.3f, 1f, .7f, .1f };  //unneeded as of now.  top gear used to be .5f instead of .1f
     private float steerAngle;
-
-    [SerializeField] public int bodySelection;
 
     [SerializeField] public Text rpmOutput;
     [SerializeField] public Text velocityOutput;
@@ -192,6 +192,8 @@ public class CarController : MonoBehaviour
         Time.timeScale = 1f;
         carEffects = GameObject.Find("Camino").GetComponent<CarEffects>();
         thatPurpleyColor = boostMeter.color;
+
+        
     }
 
     private void Start()
@@ -200,6 +202,8 @@ public class CarController : MonoBehaviour
         carRigidBody = GetComponent<Rigidbody>();
         //carRigidBody.centerOfMass = centerOfMassGround.localPosition;
         carRigidBody.centerOfMass = centerOfMassCurrent.localPosition;
+
+        carBodySelection.BodyCheck();
     }
 
     private void OnEnable()
