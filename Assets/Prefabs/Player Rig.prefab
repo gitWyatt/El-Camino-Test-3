@@ -1073,10 +1073,10 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 1106791503}
+    m_SelectOnUp: {fileID: 1428129084922525072}
     m_SelectOnDown: {fileID: 1428129084922525072}
-    m_SelectOnLeft: {fileID: 4017779753129730248}
-    m_SelectOnRight: {fileID: 1428129084922525072}
+    m_SelectOnLeft: {fileID: 1708820076}
+    m_SelectOnRight: {fileID: 1428129085250583666}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -30736,11 +30736,11 @@ PrefabInstance:
     - target: {fileID: 8667348515540812675, guid: 131daab36bec5f840802ec3ac6d03510, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
-      objectReference: {fileID: 4017779753129730248}
+      objectReference: {fileID: 1708820076}
     - target: {fileID: 8667348515540812675, guid: 131daab36bec5f840802ec3ac6d03510, type: 3}
       propertyPath: m_Navigation.m_SelectOnRight
       value: 
-      objectReference: {fileID: 1106791503}
+      objectReference: {fileID: 145530279}
     - target: {fileID: 8667348515540812675, guid: 131daab36bec5f840802ec3ac6d03510, type: 3}
       propertyPath: m_Options.m_Options.Array.size
       value: 5
