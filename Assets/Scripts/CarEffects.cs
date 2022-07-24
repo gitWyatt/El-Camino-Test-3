@@ -206,7 +206,7 @@ public class CarEffects : MonoBehaviour
     [SerializeField] private bool fireMarksSwitch;
     private bool fireMarksFlag;
     [SerializeField] private bool akiraTrailSwitch;
-    private bool akiraTrailFlag = true;
+    private bool akiraTrailFlag = false;
 
     private bool thrusterFlag = false;
 
@@ -268,15 +268,19 @@ public class CarEffects : MonoBehaviour
         var rightTailLightRenderer = rightTailLight.GetComponent<MeshRenderer>();
         leftTailLightRenderer.enabled = false;
         rightTailLightRenderer.enabled = false;
-    }
 
+        
+    }
     private void Update()
     {
         CheckTransforms();
         CheckDrift();
         CheckBoost();
         CheckLights();
-        Debug.Log(PlayerPrefs.GetInt("bodyIndex"));
+        Debug.Log("GroundBoosting: " + carController.groundBoosting);
+        Debug.Log("akiraTrailFlag: " + akiraTrailFlag);
+        Debug.Log("leftTrailBMWM1 emitting: " + leftTrailBMWM1.emitting);
+        Debug.Log("Playerprefs UseButtonIndex: " + PlayerPrefs.GetInt("useButtonIndex"));
     }
 
     private void CheckTransforms()
@@ -450,6 +454,10 @@ public class CarEffects : MonoBehaviour
         {
             startAkiraTrail();
         }
+        else if (!carController.groundBoosting)
+        {
+            stopAkiraTrail();
+        }
         else
         {
             stopAkiraTrail();
@@ -481,144 +489,333 @@ public class CarEffects : MonoBehaviour
     }
     private void startAkiraTrail()
     {
-        switch (PlayerPrefs.GetInt("bodyIndex"))
+        if (PlayerPrefs.GetInt("useButtonIndex") == 3)
         {
-            case 0:
-                if (akiraTrailFlag) return;
-                leftTrailBMWM1.emitting = true;
-                rightTrailBMWM1.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 1:
-                if (akiraTrailFlag) return;
-                leftTrailBMWM3.emitting = true;
-                rightTrailBMWM3.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 2:
-                if (akiraTrailFlag) return;
-                leftTrailCamaroZ28.emitting = true;
-                rightTrailCamaroZ28.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 3:
-                if (akiraTrailFlag) return;
-                leftTrailChevyBelAir.emitting = true;
-                rightTrailChevyBelAir.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 4:
-                if (akiraTrailFlag) return;
-                leftTrailDatsun240Z.emitting = true;
-                rightTrailDatsun240Z.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 5:
-                if (akiraTrailFlag) return;
-                leftTrailDodgeHellcat.emitting = true;
-                rightTrailDodgeHellcat.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 6:
-                if (akiraTrailFlag) return;
-                leftTrailElCamino.emitting = true;
-                rightTrailElCamino.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 7:
-                if (akiraTrailFlag) return;
-                leftTrailFerrariF40.emitting = true;
-                rightTrailFerrariF40.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 8:
-                if (akiraTrailFlag) return;
-                leftTrailFerrariLaferrari.emitting = true;
-                rightTrailFerrariLaferrari.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 9:
-                if (akiraTrailFlag) return;
-                leftTrailFumigator.emitting = true;
-                rightTrailFumigator.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 10:
-                if (akiraTrailFlag) return;
-                leftTrailHondaCivic.emitting = true;
-                rightTrailHondaCivic.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 11:
-                if (akiraTrailFlag) return;
-                leftTrailHondaS2000.emitting = true;
-                rightTrailHondaS2000.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 12:
-                if (akiraTrailFlag) return;
-                leftTrailMazdaRX7.emitting = true;
-                rightTrailMazdaRX7.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 13:
-                if (akiraTrailFlag) return;
-                leftTrailMustangShelby.emitting = true;
-                rightTrailMustangShelby.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 14:
-                if (akiraTrailFlag) return;
-                leftTrailNissan300ZX.emitting = true;
-                rightTrailNissan300ZX.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 15:
-                if (akiraTrailFlag) return;
-                leftTrailPontiacGTO.emitting = true;
-                rightTrailPontiacGTO.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 16:
-                if (akiraTrailFlag) return;
-                leftTrailPorsche918.emitting = true;
-                rightTrailPorsche918.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 17:
-                if (akiraTrailFlag) return;
-                leftTrailSkylineGTR.emitting = true;
-                rightTrailSkylineGTR.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 18:
-                if (akiraTrailFlag) return;
-                leftTrailToyotaAE86.emitting = true;
-                rightTrailToyotaAE86.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 19:
-                if (akiraTrailFlag) return;
-                leftTrailToyotaMR2.emitting = true;
-                rightTrailToyotaMR2.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 20:
-                if (akiraTrailFlag) return;
-                leftTrailToyotaSupra.emitting = true;
-                rightTrailToyotaSupra.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            case 21:
-                if (akiraTrailFlag) return;
-                leftTrailWRXSTI.emitting = true;
-                rightTrailWRXSTI.emitting = true;
-                akiraTrailFlag = true;
-                break;
-            default:
-                akiraTrailFlag = false;
-                break;
+            switch (PlayerPrefs.GetInt("bodyIndex"))
+            {
+                case 0:
+                    if (akiraTrailFlag) return;
+                    leftTrailBMWM1.emitting = true;
+                    rightTrailBMWM1.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 1:
+                    if (akiraTrailFlag) return;
+                    leftTrailBMWM3.emitting = true;
+                    rightTrailBMWM3.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 2:
+                    if (akiraTrailFlag) return;
+                    leftTrailCamaroZ28.emitting = true;
+                    rightTrailCamaroZ28.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 3:
+                    if (akiraTrailFlag) return;
+                    leftTrailChevyBelAir.emitting = true;
+                    rightTrailChevyBelAir.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 4:
+                    if (akiraTrailFlag) return;
+                    leftTrailDatsun240Z.emitting = true;
+                    rightTrailDatsun240Z.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 5:
+                    if (akiraTrailFlag) return;
+                    leftTrailDodgeHellcat.emitting = true;
+                    rightTrailDodgeHellcat.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 6:
+                    if (akiraTrailFlag) return;
+                    leftTrailElCamino.emitting = true;
+                    rightTrailElCamino.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 7:
+                    if (akiraTrailFlag) return;
+                    leftTrailFerrariF40.emitting = true;
+                    rightTrailFerrariF40.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 8:
+                    if (akiraTrailFlag) return;
+                    leftTrailFerrariLaferrari.emitting = true;
+                    rightTrailFerrariLaferrari.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 9:
+                    if (akiraTrailFlag) return;
+                    leftTrailFumigator.emitting = true;
+                    rightTrailFumigator.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 10:
+                    if (akiraTrailFlag) return;
+                    leftTrailHondaCivic.emitting = true;
+                    rightTrailHondaCivic.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 11:
+                    if (akiraTrailFlag) return;
+                    leftTrailHondaS2000.emitting = true;
+                    rightTrailHondaS2000.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 12:
+                    if (akiraTrailFlag) return;
+                    leftTrailMazdaRX7.emitting = true;
+                    rightTrailMazdaRX7.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 13:
+                    if (akiraTrailFlag) return;
+                    leftTrailMustangShelby.emitting = true;
+                    rightTrailMustangShelby.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 14:
+                    if (akiraTrailFlag) return;
+                    leftTrailNissan300ZX.emitting = true;
+                    rightTrailNissan300ZX.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 15:
+                    if (akiraTrailFlag) return;
+                    leftTrailPontiacGTO.emitting = true;
+                    rightTrailPontiacGTO.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 16:
+                    if (akiraTrailFlag) return;
+                    leftTrailPorsche918.emitting = true;
+                    rightTrailPorsche918.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 17:
+                    if (akiraTrailFlag) return;
+                    leftTrailSkylineGTR.emitting = true;
+                    rightTrailSkylineGTR.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 18:
+                    if (akiraTrailFlag) return;
+                    leftTrailToyotaAE86.emitting = true;
+                    rightTrailToyotaAE86.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 19:
+                    if (akiraTrailFlag) return;
+                    leftTrailToyotaMR2.emitting = true;
+                    rightTrailToyotaMR2.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 20:
+                    if (akiraTrailFlag) return;
+                    leftTrailToyotaSupra.emitting = true;
+                    rightTrailToyotaSupra.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 21:
+                    if (akiraTrailFlag) return;
+                    leftTrailWRXSTI.emitting = true;
+                    rightTrailWRXSTI.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                default:
+                    akiraTrailFlag = false;
+                    break;
+            }
         }
+        else
+        {
+            leftTrailBMWM1.emitting = false;
+            rightTrailBMWM1.emitting = false;
+            leftTrailBMWM3.emitting = false;
+            rightTrailBMWM3.emitting = false;
+            leftTrailCamaroZ28.emitting = false;
+            rightTrailCamaroZ28.emitting = false;
+            leftTrailChevyBelAir.emitting = false;
+            rightTrailChevyBelAir.emitting = false;
+            leftTrailDatsun240Z.emitting = false;
+            rightTrailDatsun240Z.emitting = false;
+            leftTrailDodgeHellcat.emitting = false;
+            rightTrailDodgeHellcat.emitting = false;
+            leftTrailElCamino.emitting = false;
+            rightTrailElCamino.emitting = false;
+            leftTrailFerrariF40.emitting = false;
+            rightTrailFerrariF40.emitting = false;
+            leftTrailFerrariLaferrari.emitting = false;
+            rightTrailFerrariLaferrari.emitting = false;
+            leftTrailFumigator.emitting = false;
+            rightTrailFumigator.emitting = false;
+            leftTrailHondaCivic.emitting = false;
+            rightTrailHondaCivic.emitting = false;
+            leftTrailHondaS2000.emitting = false;
+            rightTrailHondaS2000.emitting = false;
+            leftTrailMazdaRX7.emitting = false;
+            rightTrailMazdaRX7.emitting = false;
+            leftTrailMustangShelby.emitting = false;
+            rightTrailMustangShelby.emitting = false;
+            leftTrailNissan300ZX.emitting = false;
+            rightTrailNissan300ZX.emitting = false;
+            leftTrailPontiacGTO.emitting = false;
+            rightTrailPontiacGTO.emitting = false;
+            leftTrailPorsche918.emitting = false;
+            rightTrailPorsche918.emitting = false;
+            leftTrailSkylineGTR.emitting = false;
+            rightTrailSkylineGTR.emitting = false;
+            leftTrailToyotaAE86.emitting = false;
+            rightTrailToyotaAE86.emitting = false;
+            leftTrailToyotaMR2.emitting = false;
+            rightTrailToyotaMR2.emitting = false;
+            leftTrailToyotaSupra.emitting = false;
+            rightTrailToyotaSupra.emitting = false;
+            leftTrailWRXSTI.emitting = false;
+            rightTrailWRXSTI.emitting = false;
+        }
+
+        //switch (PlayerPrefs.GetInt("bodyIndex"))
+        //{
+        //    case 0:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailBMWM1.emitting = true;
+        //        rightTrailBMWM1.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 1:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailBMWM3.emitting = true;
+        //        rightTrailBMWM3.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 2:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailCamaroZ28.emitting = true;
+        //        rightTrailCamaroZ28.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 3:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailChevyBelAir.emitting = true;
+        //        rightTrailChevyBelAir.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 4:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailDatsun240Z.emitting = true;
+        //        rightTrailDatsun240Z.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 5:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailDodgeHellcat.emitting = true;
+        //        rightTrailDodgeHellcat.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 6:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailElCamino.emitting = true;
+        //        rightTrailElCamino.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 7:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailFerrariF40.emitting = true;
+        //        rightTrailFerrariF40.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 8:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailFerrariLaferrari.emitting = true;
+        //        rightTrailFerrariLaferrari.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 9:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailFumigator.emitting = true;
+        //        rightTrailFumigator.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 10:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailHondaCivic.emitting = true;
+        //        rightTrailHondaCivic.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 11:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailHondaS2000.emitting = true;
+        //        rightTrailHondaS2000.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 12:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailMazdaRX7.emitting = true;
+        //        rightTrailMazdaRX7.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 13:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailMustangShelby.emitting = true;
+        //        rightTrailMustangShelby.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 14:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailNissan300ZX.emitting = true;
+        //        rightTrailNissan300ZX.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 15:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailPontiacGTO.emitting = true;
+        //        rightTrailPontiacGTO.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 16:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailPorsche918.emitting = true;
+        //        rightTrailPorsche918.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 17:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailSkylineGTR.emitting = true;
+        //        rightTrailSkylineGTR.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 18:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailToyotaAE86.emitting = true;
+        //        rightTrailToyotaAE86.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 19:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailToyotaMR2.emitting = true;
+        //        rightTrailToyotaMR2.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 20:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailToyotaSupra.emitting = true;
+        //        rightTrailToyotaSupra.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    case 21:
+        //        if (akiraTrailFlag) return;
+        //        leftTrailWRXSTI.emitting = true;
+        //        rightTrailWRXSTI.emitting = true;
+        //        akiraTrailFlag = true;
+        //        break;
+        //    default:
+        //        akiraTrailFlag = false;
+        //        break;
+        //}
 
 
         //if (akiraTrailFlag) return;
@@ -631,133 +828,133 @@ public class CarEffects : MonoBehaviour
         switch (PlayerPrefs.GetInt("bodyIndex"))
         {
             case 0:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailBMWM1.emitting = false;
                 rightTrailBMWM1.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 1:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailBMWM3.emitting = false;
                 rightTrailBMWM3.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 2:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailCamaroZ28.emitting = false;
                 rightTrailCamaroZ28.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 3:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailChevyBelAir.emitting = false;
                 rightTrailChevyBelAir.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 4:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailDatsun240Z.emitting = false;
                 rightTrailDatsun240Z.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 5:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailDodgeHellcat.emitting = false;
                 rightTrailDodgeHellcat.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 6:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailElCamino.emitting = false;
                 rightTrailElCamino.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 7:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailFerrariF40.emitting = false;
                 rightTrailFerrariF40.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 8:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailFerrariLaferrari.emitting = false;
                 rightTrailFerrariLaferrari.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 9:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailFumigator.emitting = false;
                 rightTrailFumigator.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 10:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailHondaCivic.emitting = false;
                 rightTrailHondaCivic.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 11:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailHondaS2000.emitting = false;
                 rightTrailHondaS2000.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 12:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailMazdaRX7.emitting = false;
                 rightTrailMazdaRX7.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 13:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailMustangShelby.emitting = false;
                 rightTrailMustangShelby.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 14:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailNissan300ZX.emitting = false;
                 rightTrailNissan300ZX.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 15:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailPontiacGTO.emitting = false;
                 rightTrailPontiacGTO.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 16:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailPorsche918.emitting = false;
                 rightTrailPorsche918.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 17:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailSkylineGTR.emitting = false;
                 rightTrailSkylineGTR.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 18:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailToyotaAE86.emitting = false;
                 rightTrailToyotaAE86.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 19:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailToyotaMR2.emitting = false;
                 rightTrailToyotaMR2.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 20:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailToyotaSupra.emitting = false;
                 rightTrailToyotaSupra.emitting = false;
                 akiraTrailFlag = false;
                 break;
             case 21:
-                if (!akiraTrailFlag) return;
+                
                 leftTrailWRXSTI.emitting = false;
                 rightTrailWRXSTI.emitting = false;
                 akiraTrailFlag = false;

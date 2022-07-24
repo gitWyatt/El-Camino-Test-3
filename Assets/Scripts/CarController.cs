@@ -86,13 +86,13 @@ public class CarController : MonoBehaviour
     [SerializeField] private float maxAirThrusterFuel = 100f;
     [SerializeField] private float airThrusterDrain = 0.5f;
     [SerializeField] private float airThrusterRegen = 0.5f;
-    [SerializeField] private float airThrusterCutoff = 40f;
+    [SerializeField] private float airThrusterCutoff = 25f;
     public float playerGroundBoostFuel = 100f;
     public bool groundBoostFlag = false;
     [SerializeField] private float maxGroundBoostFuel = 100f;
     [SerializeField] private float groundBoostDrain = 0.5f;
     [SerializeField] private float groundBoostRegen = 0.5f;
-    [SerializeField] private float groundBoostCutoff = 70f;
+    [SerializeField] private float groundBoostCutoff = 25f;
 
     [SerializeField] public bool frontWheelDrive;
     [SerializeField] public bool rearWheelDrive;
@@ -1189,9 +1189,10 @@ public class CarController : MonoBehaviour
     {
         if (useButtonSelection == 1)
         {
+            carEffects.AnimateJump();
+
             if (touchingGround)
             {
-                carEffects.AnimateJump();
                 carRigidBody.AddForce(transform.up * jumpForce);
                 carRigidBody.AddForce(transform.forward * (jumpForce / 10));
             }
@@ -1226,6 +1227,7 @@ public class CarController : MonoBehaviour
             {
                 carRigidBody.AddForce(transform.forward * groundBoostForce);
                 groundBoosting = true;
+                playerGroundBoostFuel -= groundBoostDrain;
 
 
                 //frontLeftWheelCollider.motorTorque = frontLeftWheelCollider.motorTorque * 10f;
@@ -1236,8 +1238,9 @@ public class CarController : MonoBehaviour
             else
             {
                 groundBoosting = false;
+                playerGroundBoostFuel += groundBoostRegen;
             }
-            playerGroundBoostFuel -= groundBoostDrain;
+            //playerGroundBoostFuel -= groundBoostDrain;
         }
         else
         {

@@ -24155,7 +24155,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428129086377603201}
-  m_LocalRotation: {x: 0.062746525, y: -0, z: -0, w: 0.9980295}
+  m_LocalRotation: {x: 0.06274651, y: -0, z: -0, w: 0.9980295}
   m_LocalPosition: {x: 0.0000038146973, y: 13, z: -25.000004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -24357,7 +24357,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428129086589540616}
-  m_LocalRotation: {x: 0.062746525, y: -0, z: -0, w: 0.9980295}
+  m_LocalRotation: {x: 0.06274651, y: -0, z: -0, w: 0.9980295}
   m_LocalPosition: {x: 0.0000038146973, y: 13, z: -25.000004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -27448,13 +27448,13 @@ MonoBehaviour:
   maxAirThrusterFuel: 100
   airThrusterDrain: 0.8
   airThrusterRegen: 0.2
-  airThrusterCutoff: 40
+  airThrusterCutoff: 25
   playerGroundBoostFuel: 100
   groundBoostFlag: 0
   maxGroundBoostFuel: 100
   groundBoostDrain: 0.6
   groundBoostRegen: 0.3
-  groundBoostCutoff: 40
+  groundBoostCutoff: 25
   frontWheelDrive: 1
   rearWheelDrive: 0
   singleAxleMFAdjustment: 2.1
