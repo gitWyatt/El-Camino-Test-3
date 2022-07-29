@@ -61,6 +61,10 @@ public class CarEffects : MonoBehaviour
     [SerializeField] public TrailRenderer rightTrailToyotaSupra;
     [SerializeField] public TrailRenderer leftTrailWRXSTI;
     [SerializeField] public TrailRenderer rightTrailWRXSTI;
+    [SerializeField] public TrailRenderer leftTrailPontiacBonneville;
+    [SerializeField] public TrailRenderer rightTrailPontiacBonneville;
+    [SerializeField] public TrailRenderer leftTrailGrandPrix;
+    [SerializeField] public TrailRenderer rightTrailGrandPrix;
     //[SerializeField] public TrailRenderer leftAkiraTrailCamino;
     //[SerializeField] public TrailRenderer rightAkiraTrailCamino;
     //[SerializeField] public TrailRenderer leftAkiraTrailAE86;
@@ -98,6 +102,8 @@ public class CarEffects : MonoBehaviour
     [SerializeField] public GameObject toyotaMR2TLGroup;
     [SerializeField] public GameObject toyotaSupraTLGroup;
     [SerializeField] public GameObject wRXSTITLGroup;
+    [SerializeField] public GameObject pontiacBonnevilleTLGroup;
+    [SerializeField] public GameObject grandPrixTLGroup;
     [Space]
     [Header("Taillights")]
     [SerializeField] public Transform bMWM1TL;
@@ -122,6 +128,8 @@ public class CarEffects : MonoBehaviour
     [SerializeField] public Transform toyotaMR2TL;
     [SerializeField] public Transform toyotaSupraTL;
     [SerializeField] public Transform wRXSTITL;
+    [SerializeField] public Transform pontiacBonnevilleTL;
+    [SerializeField] public Transform grandPrixTL;
     [Space]
 
     public Renderer leftTailLightRenderer;
@@ -163,6 +171,8 @@ public class CarEffects : MonoBehaviour
     [SerializeField] private Mesh skylineGTRMesh;
     [SerializeField] private Mesh toyotaSupraMesh;
     [SerializeField] private Mesh wrxSTIMesh;
+    [SerializeField] private Mesh pontiacBonnevilleMesh;
+    [SerializeField] private Mesh grandPrixMesh;
     [Space]
     [Header("body paint")]
     [SerializeField] private Material elCaminoPaint;
@@ -187,6 +197,8 @@ public class CarEffects : MonoBehaviour
     [SerializeField] private Material skylineGTRPaint;
     [SerializeField] private Material toyotaSupraPaint;
     [SerializeField] private Material wrxSTIPaint;
+    [SerializeField] private Material pontiacBonnevillePaint;
+    [SerializeField] private Material grandPrixPaint;
     [Space]
     [Header("Tire Meshes and Paint")]
     [SerializeField] private Mesh offRoadTireMesh;
@@ -277,10 +289,10 @@ public class CarEffects : MonoBehaviour
         CheckDrift();
         CheckBoost();
         CheckLights();
-        Debug.Log("GroundBoosting: " + carController.groundBoosting);
-        Debug.Log("akiraTrailFlag: " + akiraTrailFlag);
-        Debug.Log("leftTrailBMWM1 emitting: " + leftTrailBMWM1.emitting);
-        Debug.Log("Playerprefs UseButtonIndex: " + PlayerPrefs.GetInt("useButtonIndex"));
+        //Debug.Log("GroundBoosting: " + carController.groundBoosting);
+        //Debug.Log("akiraTrailFlag: " + akiraTrailFlag);
+        //Debug.Log("leftTrailBMWM1 emitting: " + leftTrailBMWM1.emitting);
+        //Debug.Log("Playerprefs UseButtonIndex: " + PlayerPrefs.GetInt("useButtonIndex"));
     }
 
     private void CheckTransforms()
@@ -625,6 +637,18 @@ public class CarEffects : MonoBehaviour
                     rightTrailWRXSTI.emitting = true;
                     akiraTrailFlag = true;
                     break;
+                case 22:
+                    if (akiraTrailFlag) return;
+                    leftTrailPontiacBonneville.emitting = true;
+                    rightTrailPontiacBonneville.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 23:
+                    if (akiraTrailFlag) return;
+                    leftTrailGrandPrix.emitting = true;
+                    rightTrailGrandPrix.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
                 default:
                     akiraTrailFlag = false;
                     break;
@@ -676,6 +700,10 @@ public class CarEffects : MonoBehaviour
             rightTrailToyotaSupra.emitting = false;
             leftTrailWRXSTI.emitting = false;
             rightTrailWRXSTI.emitting = false;
+            leftTrailPontiacBonneville.emitting = false;
+            rightTrailPontiacBonneville.emitting = false;
+            leftTrailGrandPrix.emitting = false;
+            rightTrailGrandPrix.emitting = false;
         }
 
         //switch (PlayerPrefs.GetInt("bodyIndex"))
@@ -959,6 +987,18 @@ public class CarEffects : MonoBehaviour
                 rightTrailWRXSTI.emitting = false;
                 akiraTrailFlag = false;
                 break;
+            case 22:
+
+                leftTrailPontiacBonneville.emitting = false;
+                rightTrailPontiacBonneville.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 23:
+
+                leftTrailGrandPrix.emitting = false;
+                rightTrailGrandPrix.emitting = false;
+                akiraTrailFlag = false;
+                break;
             default:
                 akiraTrailFlag = false;
                 break;
@@ -1038,6 +1078,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 1:
                 tailLightRenderer = bMWM3TL.GetComponent<MeshRenderer>();
@@ -1063,6 +1105,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 2:
                 tailLightRenderer = cameroZ28TL.GetComponent<MeshRenderer>();
@@ -1088,6 +1132,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 3:
                 tailLightRenderer = chevyBelAirTL.GetComponent<MeshRenderer>();
@@ -1113,6 +1159,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 4:
                 tailLightRenderer = datsun240ZTL.GetComponent<MeshRenderer>();
@@ -1138,6 +1186,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 5:
                 tailLightRenderer = dodgeHellcatTL.GetComponent<MeshRenderer>();
@@ -1163,6 +1213,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 6:
                 tailLightRenderer = elCaminoTL.GetComponent<MeshRenderer>();
@@ -1188,6 +1240,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 7:
                 tailLightRenderer = ferrariF40TL.GetComponent<MeshRenderer>();
@@ -1213,6 +1267,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 8:
                 tailLightRenderer = ferrariLaferrariTL.GetComponent<MeshRenderer>();
@@ -1238,6 +1294,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 9:
                 tailLightRenderer = fumigatorTL.GetComponent<MeshRenderer>();
@@ -1263,6 +1321,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 10:
                 tailLightRenderer = hondaCivicTL.GetComponent<MeshRenderer>();
@@ -1288,6 +1348,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 11:
                 tailLightRenderer = hondaS2000TL.GetComponent<MeshRenderer>();
@@ -1313,6 +1375,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 12:
                 tailLightRenderer = mazdaRX7TL.GetComponent<MeshRenderer>();
@@ -1338,6 +1402,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 13:
                 tailLightRenderer = mustangShelbyTL.GetComponent<MeshRenderer>();
@@ -1363,6 +1429,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 14:
                 tailLightRenderer = nissan300ZXTL.GetComponent<MeshRenderer>();
@@ -1388,6 +1456,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 15:
                 tailLightRenderer = pontiacGTOTL.GetComponent<MeshRenderer>();
@@ -1413,6 +1483,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 16:
                 tailLightRenderer = porsche918TL.GetComponent<MeshRenderer>();
@@ -1438,6 +1510,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 17:
                 tailLightRenderer = skylineGTRTL.GetComponent<MeshRenderer>();
@@ -1463,6 +1537,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 18:
                 tailLightRenderer = toyotaAE86TL.GetComponent<MeshRenderer>();
@@ -1488,6 +1564,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 19:
                 tailLightRenderer = toyotaMR2TL.GetComponent<MeshRenderer>();
@@ -1513,6 +1591,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(true);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 20:
                 tailLightRenderer = toyotaSupraTL.GetComponent<MeshRenderer>();
@@ -1538,6 +1618,8 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(true);
                 wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
                 break;
             case 21:
                 tailLightRenderer = wRXSTITL.GetComponent<MeshRenderer>();
@@ -1563,6 +1645,62 @@ public class CarEffects : MonoBehaviour
                 toyotaMR2TLGroup.SetActive(false);
                 toyotaSupraTLGroup.SetActive(false);
                 wRXSTITLGroup.SetActive(true);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
+                break;
+            case 22:
+                tailLightRenderer = pontiacBonnevilleTL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(true);
+                grandPrixTLGroup.SetActive(false);
+                break;
+            case 23:
+                tailLightRenderer = grandPrixTL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(true);
                 break;
         }
 

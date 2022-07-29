@@ -40,6 +40,8 @@ public class CarBodySelection : MonoBehaviour
     [SerializeField] private Mesh skylineGTRMesh;
     [SerializeField] private Mesh toyotaSupraMesh;
     [SerializeField] private Mesh wrxSTIMesh;
+    [SerializeField] private Mesh pontiacBonnevilleMesh;
+    [SerializeField] private Mesh grandPrixMesh;
 
 
     [SerializeField] private Material elCaminoPaint;
@@ -64,6 +66,8 @@ public class CarBodySelection : MonoBehaviour
     [SerializeField] private Material skylineGTRPaint;
     [SerializeField] private Material toyotaSupraPaint;
     [SerializeField] private Material wrxSTIPaint;
+    [SerializeField] private Material pontiacBonnevillePaint;
+    [SerializeField] private Material grandPrixPaint;
 
 
     private void Awake()
@@ -287,6 +291,18 @@ public class CarBodySelection : MonoBehaviour
         PlayerPrefs.SetInt("bodyIndex", 21);
         carBody.GetComponent<MeshFilter>().mesh = wrxSTIMesh;
         carBody.GetComponent<Renderer>().material = wrxSTIPaint;
+    }
+    public void SetBodyPontiacBonneville()
+    {
+        PlayerPrefs.SetInt("bodyIndex", 22);
+        carBody.GetComponent<MeshFilter>().mesh = pontiacBonnevilleMesh;
+        carBody.GetComponent<Renderer>().material = pontiacBonnevillePaint;
+    }
+    public void SetBodyGrandPrix()
+    {
+        PlayerPrefs.SetInt("bodyIndex", 23);
+        carBody.GetComponent<MeshFilter>().mesh = grandPrixMesh;
+        carBody.GetComponent<Renderer>().material = grandPrixPaint;
     }
 }
 

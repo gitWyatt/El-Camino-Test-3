@@ -107,6 +107,24 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Passive item swap"",
+                    ""type"": ""Button"",
+                    ""id"": ""d347b9b6-c604-4e32-b904-5c6d5ddf9c7d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Use item swap"",
+                    ""type"": ""Button"",
+                    ""id"": ""4126ee78-cf74-45b3-96ee-a52722ac7ac9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -428,6 +446,50 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""action"": ""Camera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c9617912-1b82-430d-828d-f98d4c758291"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Passive item swap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9f24b815-9cdb-4a02-b730-9bb9bfb7f9d5"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Passive item swap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""10967869-19ff-420c-9f5e-4a68908a044c"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Use item swap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f1042cfd-8e5c-4ab0-8279-997c878c9ecd"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Use item swap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -600,6 +662,8 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         m_Player_Handbrake = m_Player.FindAction("Handbrake", throwIfNotFound: true);
         m_Player_Engage = m_Player.FindAction("Engage", throwIfNotFound: true);
         m_Player_Camera = m_Player.FindAction("Camera", throwIfNotFound: true);
+        m_Player_Passiveitemswap = m_Player.FindAction("Passive item swap", throwIfNotFound: true);
+        m_Player_Useitemswap = m_Player.FindAction("Use item swap", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Directional = m_Menu.FindAction("Directional", throwIfNotFound: true);
@@ -671,6 +735,8 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Handbrake;
     private readonly InputAction m_Player_Engage;
     private readonly InputAction m_Player_Camera;
+    private readonly InputAction m_Player_Passiveitemswap;
+    private readonly InputAction m_Player_Useitemswap;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -684,6 +750,8 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         public InputAction @Handbrake => m_Wrapper.m_Player_Handbrake;
         public InputAction @Engage => m_Wrapper.m_Player_Engage;
         public InputAction @Camera => m_Wrapper.m_Player_Camera;
+        public InputAction @Passiveitemswap => m_Wrapper.m_Player_Passiveitemswap;
+        public InputAction @Useitemswap => m_Wrapper.m_Player_Useitemswap;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -720,6 +788,12 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 @Camera.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCamera;
                 @Camera.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCamera;
                 @Camera.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCamera;
+                @Passiveitemswap.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPassiveitemswap;
+                @Passiveitemswap.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPassiveitemswap;
+                @Passiveitemswap.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPassiveitemswap;
+                @Useitemswap.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseitemswap;
+                @Useitemswap.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseitemswap;
+                @Useitemswap.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseitemswap;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -751,6 +825,12 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 @Camera.started += instance.OnCamera;
                 @Camera.performed += instance.OnCamera;
                 @Camera.canceled += instance.OnCamera;
+                @Passiveitemswap.started += instance.OnPassiveitemswap;
+                @Passiveitemswap.performed += instance.OnPassiveitemswap;
+                @Passiveitemswap.canceled += instance.OnPassiveitemswap;
+                @Useitemswap.started += instance.OnUseitemswap;
+                @Useitemswap.performed += instance.OnUseitemswap;
+                @Useitemswap.canceled += instance.OnUseitemswap;
             }
         }
     }
@@ -817,6 +897,8 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         void OnHandbrake(InputAction.CallbackContext context);
         void OnEngage(InputAction.CallbackContext context);
         void OnCamera(InputAction.CallbackContext context);
+        void OnPassiveitemswap(InputAction.CallbackContext context);
+        void OnUseitemswap(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {

@@ -100,12 +100,43 @@ public class CarController : MonoBehaviour
     [SerializeField] private bool frontHandBrake;
     [SerializeField] private bool rearHandBrake;
 
+    [Space]
+    [Header("motor values")]
     [SerializeField] private float motorForce;
     [SerializeField] public int motorSelection;
     [SerializeField] private float streetMotorForce;
     [SerializeField] private float racingMotorForce;
-
+    [Space]
+    [Header("transmission values")]
     [SerializeField] public int transmissionSelection;
+    [Space]
+    [SerializeField] public float fourSpeedFirstGear;
+    [SerializeField] public float fourSpeedSecondGear;
+    [SerializeField] public float fourSpeedThirdGear;
+    [SerializeField] public float fourSpeedFourthGear;
+    [Space]
+    [SerializeField] public float sixSpeedFirstGear;
+    [SerializeField] public float sixSpeedSecondGear;
+    [SerializeField] public float sixSpeedThirdGear;
+    [SerializeField] public float sixSpeedFourthGear;
+    [SerializeField] public float sixSpeedFifthGear;
+    [SerializeField] public float sixSpeedSixthGear;
+    [Space]
+    [SerializeField] public float sixSpeedSportFirstGear;
+    [SerializeField] public float sixSpeedSportSecondGear;
+    [SerializeField] public float sixSpeedSportThirdGear;
+    [SerializeField] public float sixSpeedSportFourthGear;
+    [SerializeField] public float sixSpeedSportFifthGear;
+    [SerializeField] public float sixSpeedSportSixthGear;
+    [Space]
+    [SerializeField] public float sixSpeedDriftFirstGear;
+    [SerializeField] public float sixSpeedDriftSecondGear;
+    [SerializeField] public float sixSpeedDriftThirdGear;
+    [SerializeField] public float sixSpeedDriftFourthGear;
+    [SerializeField] public float sixSpeedDriftFifthGear;
+    [SerializeField] public float sixSpeedDriftSixthGear;
+    [Header("end transmission values")]
+    [Space]
 
     [SerializeField] private float brakeForce;
     [SerializeField] private float driftBrakesLerpValue;
@@ -250,6 +281,8 @@ public class CarController : MonoBehaviour
         flipCheck = controls.Player.Flip.ReadValue<float>();
         controls.Player.Engage.performed += EngageHandler;
         engageCheck = controls.Player.Engage.ReadValue<float>();
+        controls.Player.Passiveitemswap.performed += HandleSwitching;
+        controls.Player.Useitemswap.performed += HandleSwitching;
         controls.Player.Pause.performed += PauseHandler;
 
         if (brakeCheck > .5)
@@ -453,20 +486,20 @@ public class CarController : MonoBehaviour
                     switch (currentGear)
                     {
                         case 2:
-                            transmissionForce = 2f;
+                            transmissionForce = fourSpeedSecondGear;
                             break;
                         case 3:
-                            transmissionForce = 1f;
+                            transmissionForce = fourSpeedThirdGear;
                             break;
                         case 4:
-                            transmissionForce = .01f;
+                            transmissionForce = fourSpeedFourthGear;
                             break;
                     }
                 }
                 else
                 {
                     currentGear = 4;
-                    transmissionForce = .01f;
+                    transmissionForce = fourSpeedFourthGear;
                 }
             }
             if (engineRPM <= minRPM)
@@ -478,24 +511,24 @@ public class CarController : MonoBehaviour
                     switch (currentGear)
                     {
                         case 1:
-                            transmissionForce = 2.5f;
+                            transmissionForce = fourSpeedFirstGear;
                             break;
                         case 2:
-                            transmissionForce = 2;
+                            transmissionForce = fourSpeedSecondGear;
                             break;
                         case 3:
-                            transmissionForce = 1f;
+                            transmissionForce = fourSpeedThirdGear;
                             break;
                     }
                 }
                 if (engineRPM < 0)
                 {
-                    transmissionForce = 2.5f;
+                    transmissionForce = fourSpeedFirstGear;
                 }
                 else
                 {
                     currentGear = 1;
-                    transmissionForce = 2.5f;
+                    transmissionForce = fourSpeedFirstGear;
                 }
             }
         }
@@ -512,26 +545,26 @@ public class CarController : MonoBehaviour
                     switch (currentGear)
                     {
                         case 2:
-                            transmissionForce = 2f;
+                            transmissionForce = sixSpeedSecondGear;
                             break;
                         case 3:
-                            transmissionForce = 1.5f;
+                            transmissionForce = sixSpeedThirdGear;
                             break;
                         case 4:
-                            transmissionForce = 1f;
+                            transmissionForce = sixSpeedFourthGear;
                             break;
                         case 5:
-                            transmissionForce = .5f;
+                            transmissionForce = sixSpeedFifthGear;
                             break;
                         case 6:
-                            transmissionForce = .01f;
+                            transmissionForce = sixSpeedSixthGear;
                             break;
                     }
                 }
                 else
                 {
                     currentGear = 6;
-                    transmissionForce = .01f;
+                    transmissionForce = sixSpeedSixthGear;
                 }
             }
             if (engineRPM <= minRPM)
@@ -543,30 +576,30 @@ public class CarController : MonoBehaviour
                     switch (currentGear)
                     {
                         case 1:
-                            transmissionForce = 2.5f;
+                            transmissionForce = sixSpeedFirstGear;
                             break;
                         case 2:
-                            transmissionForce = 2f;
+                            transmissionForce = sixSpeedSecondGear;
                             break;
                         case 3:
-                            transmissionForce = 1.5f;
+                            transmissionForce = sixSpeedThirdGear;
                             break;
                         case 4:
-                            transmissionForce = 1f;
+                            transmissionForce = sixSpeedFourthGear;
                             break;
                         case 5:
-                            transmissionForce = .5f;
+                            transmissionForce = sixSpeedFifthGear;
                             break;
                     }
                 }
                 if (engineRPM < 0)
                 {
-                    transmissionForce = 2.5f;
+                    transmissionForce = sixSpeedFirstGear;
                 }
                 else
                 {
                     currentGear = 1;
-                    transmissionForce = 2.5f;
+                    transmissionForce = sixSpeedFirstGear;
                 }
             }
         }
@@ -582,26 +615,26 @@ public class CarController : MonoBehaviour
                     switch (currentGear)
                     {
                         case 2:
-                            transmissionForce = 3f;
+                            transmissionForce = sixSpeedSportSecondGear;
                             break;
                         case 3:
-                            transmissionForce = 2f;
+                            transmissionForce = sixSpeedSportThirdGear;
                             break;
                         case 4:
-                            transmissionForce = 1.3f;
+                            transmissionForce = sixSpeedSportFourthGear;
                             break;
                         case 5:
-                            transmissionForce = .7f;
+                            transmissionForce = sixSpeedSportFifthGear;
                             break;
                         case 6:
-                            transmissionForce = .01f;
+                            transmissionForce = sixSpeedSportSixthGear;
                             break;
                     }
                 }
                 else
                 {
                     currentGear = 6;
-                    transmissionForce = .01f;
+                    transmissionForce = sixSpeedSportSixthGear;
                 }
             }
             if (engineRPM <= minRPM)
@@ -613,30 +646,30 @@ public class CarController : MonoBehaviour
                     switch (currentGear)
                     {
                         case 1:
-                            transmissionForce = 3.5f;
+                            transmissionForce = sixSpeedSportFirstGear;
                             break;
                         case 2:
-                            transmissionForce = 3f;
+                            transmissionForce = sixSpeedSportSecondGear;
                             break;
                         case 3:
-                            transmissionForce = 2f;
+                            transmissionForce = sixSpeedSportThirdGear;
                             break;
                         case 4:
-                            transmissionForce = 1.3f;
+                            transmissionForce = sixSpeedSportFourthGear;
                             break;
                         case 5:
-                            transmissionForce = .7f;
+                            transmissionForce = sixSpeedSportFifthGear;
                             break;
                     }
                 }
                 if (engineRPM < 0)
                 {
-                    transmissionForce = 3.5f;
+                    transmissionForce = sixSpeedSportFirstGear;
                 }
                 else
                 {
                     currentGear = 1;
-                    transmissionForce = 3.5f;
+                    transmissionForce = sixSpeedSportFirstGear;
                 }
             }
         }
@@ -653,26 +686,26 @@ public class CarController : MonoBehaviour
                     switch (currentGear)
                     {
                         case 2:
-                            transmissionForce = 2f;
+                            transmissionForce = sixSpeedDriftSecondGear;
                             break;
                         case 3:
-                            transmissionForce = 1f;
+                            transmissionForce = sixSpeedDriftThirdGear;
                             break;
                         case 4:
-                            transmissionForce = .5f;
+                            transmissionForce = sixSpeedDriftFourthGear;
                             break;
                         case 5:
-                            transmissionForce = .1f;
+                            transmissionForce = sixSpeedDriftFifthGear;
                             break;
                         case 6:
-                            transmissionForce = .00001f;
+                            transmissionForce = sixSpeedDriftSixthGear;
                             break;
                     }
                 }
                 else
                 {
                     currentGear = 6;
-                    transmissionForce = .00001f;
+                    transmissionForce = sixSpeedDriftSixthGear;
                 }
             }
             if (engineRPM <= minRPM)
@@ -684,30 +717,30 @@ public class CarController : MonoBehaviour
                     switch (currentGear)
                     {
                         case 1:
-                            transmissionForce = 4f;
+                            transmissionForce = sixSpeedDriftFirstGear;
                             break;
                         case 2:
-                            transmissionForce = 2f;
+                            transmissionForce = sixSpeedDriftSecondGear;
                             break;
                         case 3:
-                            transmissionForce = 1f;
+                            transmissionForce = sixSpeedDriftThirdGear;
                             break;
                         case 4:
-                            transmissionForce = .5f;
+                            transmissionForce = sixSpeedDriftFourthGear;
                             break;
                         case 5:
-                            transmissionForce = .1f;
+                            transmissionForce = sixSpeedDriftFifthGear;
                             break;
                     }
                 }
                 if (engineRPM < 0)
                 {
-                    transmissionForce = 3.5f;
+                    transmissionForce = sixSpeedDriftFirstGear;
                 }
                 else
                 {
                     currentGear = 1;
-                    transmissionForce = 3.5f;
+                    transmissionForce = sixSpeedDriftFirstGear;
                 }
             }
         }
@@ -750,21 +783,29 @@ public class CarController : MonoBehaviour
                 break;
         }
 
-        if (Vector3.Distance(transform.forward, Vector3.Normalize(carRigidBody.velocity)) < .2f)
+        //this if statement will compare the car transform's forward vector to the car's velocity's forward vector and adjust the tires' sideways friction as a result
+        //this is to increase traction at slight adjustments while dropping traction for drifts and corners
+        if (Vector3.Distance(transform.forward, Vector3.Normalize(carRigidBody.velocity)) < .05f)
+        {
+            standardSidewaysStiffness = standardSidewaysStiffness * 3f;
+            Debug.Log("big foo");
+        }
+        else if (Vector3.Distance(transform.forward, Vector3.Normalize(carRigidBody.velocity)) >= .05f && Vector3.Distance(transform.forward, Vector3.Normalize(carRigidBody.velocity)) < .2f)
         {
             standardSidewaysStiffness = standardSidewaysStiffness * 2.5f;
+            Debug.Log("Foo");
         }
-
-        if (Vector3.Distance(transform.forward, Vector3.Normalize(carRigidBody.velocity)) > .35f)
+        else if (Vector3.Distance(transform.forward, Vector3.Normalize(carRigidBody.velocity)) > .35f)
         {
             standardSidewaysStiffness = standardSidewaysStiffness * .9f;
-            //Debug.Log("ALSDKFJLASDKJFAJSD");
+            Debug.Log("Bar");
         }
         else
         {
-            //Debug.Log("farts lol");
+            Debug.Log("spam");
         }
 
+        //Debug.Log(Vector3.Distance(transform.forward, Vector3.Normalize(carRigidBody.velocity)));
 
         float currentDriftFrontSidewaysStiffness = (frontLeftWheelSidewaysFriction.stiffness + frontRightWheelSidewaysFriction.stiffness) / 2;
         float currentDriftRearSidewaysStiffness = (backLeftWheelSidewaysFriction.stiffness + backRightWheelSidewaysFriction.stiffness) / 2;
@@ -945,6 +986,14 @@ public class CarController : MonoBehaviour
         frontLeftWheelCollider.steerAngle = Mathf.Lerp(currentSteerAngle, newSteerAngle, steeringLerpValue);
         frontRightWheelCollider.steerAngle = Mathf.Lerp(currentSteerAngle, newSteerAngle, steeringLerpValue);
 
+        //steering angle deadzone
+        //if (frontLeftWheelCollider.steerAngle <= 1 && frontLeftWheelCollider.steerAngle >= -1)
+        //{
+        //    frontLeftWheelCollider.steerAngle = 0;
+        //    frontRightWheelCollider.steerAngle = 0;
+        //}
+
+
         //currentSteerAngle = maxSteerAngle * horizontalInput;
         //frontLeftWheelCollider.steerAngle = currentSteerAngle;
         //frontRightWheelCollider.steerAngle = currentSteerAngle;
@@ -1016,7 +1065,65 @@ public class CarController : MonoBehaviour
 
         //Debug.Log(centerOfMassCurrent.localPosition);
     }
-    private void HandlePassive()
+    private void HandleSwitching(InputAction.CallbackContext context)
+    {
+        if (controls.Player.Passiveitemswap.ReadValue<float>() > .5 && Time.timeScale > 0.1) //timescale is kinda hacky to use
+        {
+            PlayerPrefs.SetInt("passiveIndex", (PlayerPrefs.GetInt("passiveIndex") + 1));
+
+            if (PlayerPrefs.GetInt("passiveIndex") == 3) //this is whats gonna need updated
+            {
+                PlayerPrefs.SetInt("passiveIndex", 0);
+            }
+
+            pauseMenu.SetPassive(PlayerPrefs.GetInt("passiveIndex"));
+            pauseMenu.PassiveDropDown.value = PlayerPrefs.GetInt("passiveIndex");
+
+        }
+
+        if (controls.Player.Useitemswap.ReadValue<float>() > .5 && Time.timeScale > 0.1)  //idk if I'll fix it tho Its probably fine
+        {
+            PlayerPrefs.SetInt("useButtonIndex", (PlayerPrefs.GetInt("useButtonIndex") + 1));
+
+            if (PlayerPrefs.GetInt("useButtonIndex") == 4) //this also, thank me later
+            {
+                PlayerPrefs.SetInt("useButtonIndex", 0);
+            }
+
+            pauseMenu.SetUseButton(PlayerPrefs.GetInt("useButtonIndex"));
+            pauseMenu.UseButtonDropDown.value = PlayerPrefs.GetInt("useButtonIndex");
+
+        }
+
+
+
+
+        Debug.Log("passiveIndex: " + PlayerPrefs.GetInt("passiveIndex"));
+        Debug.Log("useButtonIndex: " + PlayerPrefs.GetInt("useButtonIndex"));
+
+
+
+        //still needs work
+
+        //if (isPassiveSwitching == true)
+        //{
+        //    PlayerPrefs.SetInt("passiveIndex", (PlayerPrefs.GetInt("passiveIndex") + 1));
+        //    if (PlayerPrefs.GetInt("passiveIndex") == 4) //this is whats gonna need updated
+        //    {
+        //        PlayerPrefs.SetInt("passiveIndex", 0);
+        //    }
+        //}
+
+        //if (isUseSwitching == true)
+        //{
+        //    PlayerPrefs.SetInt("useButtonIndex", (PlayerPrefs.GetInt("useButtonIndex") + 1));
+        //    if (PlayerPrefs.GetInt("useButtonIndex") == 3) //this too, saved you the trouble
+        //    {
+        //        PlayerPrefs.SetInt("useButtonIndex", 0);
+        //    }
+        //}
+    }
+    public void HandlePassive()
     {
         if (passiveSelection == 1)
         {
@@ -1085,7 +1192,6 @@ public class CarController : MonoBehaviour
                     //carRigidBody.AddForce(transform.up * velocity * flightGravity * ((360f - carRollAngle) * .0005f));
                 }
                 
-                Debug.Log(carBackwardAngle);
             }
             else
             {
@@ -1100,7 +1206,8 @@ public class CarController : MonoBehaviour
                     carEffects.AnimateWingsOpen();
                 }
             }
-            else
+            
+            if (carRigidBody.velocity.magnitude < 50f)
             {
                 if (carEffects.wingsOpen == true)
                 {
@@ -1301,19 +1408,19 @@ public class CarController : MonoBehaviour
             }
         }
     }
-    private void HandleCamera()
+    private void HandleCamera()  //fixes camera when in air
     {
-        //if (isCamming)
-        //{
-        //    var cameraOrbitalTransposer2 = CMCamera.GetCinemachineComponent<CinemachineOrbitalTransposer>();
-        //    float angle = (Mathf.Atan2(cameraVerticalInput, cameraHorizontalInput) * Mathf.Rad2Deg);
-        //    cameraOrbitalTransposer2.m_Heading.m_Bias = angle;
-        //}
-        //else
-        //{
-        //    var cameraOrbitalTransposer2 = CMCamera.GetCinemachineComponent<CinemachineOrbitalTransposer>();
-        //    cameraOrbitalTransposer2.m_Heading.m_Bias = 0f;
-        //}
+        if (!touchingGround)
+        {
+            if (PlayerPrefs.GetInt("cameraIndex") == 0 || PlayerPrefs.GetInt("cameraIndex") == 1 || PlayerPrefs.GetInt("cameraIndex") == 2)
+            {
+                pauseMenu.CameraFlop(true);
+            }
+        }
+        if (touchingGround)
+        {
+            pauseMenu.CameraFlop(false);
+        }
     }
     private void UpdateWheels()
     {

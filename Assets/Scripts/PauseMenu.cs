@@ -47,6 +47,20 @@ public class PauseMenu : MonoBehaviour
 
     public int fpsCheck = 60;
 
+    public int cameraPick;
+    public int quality;
+    public int axle;
+    public int fps;
+    public int motor;
+    public int transmission;
+    public int tire;
+    public int steeringPower;
+    public int steeringAngle;
+    public int suspension;
+    public int handbrake;
+    public int passive;
+    public int useButton;
+
     private void Awake()
     {
         carController = GameObject.Find("Camino").GetComponent<CarController>();
@@ -80,16 +94,16 @@ public class PauseMenu : MonoBehaviour
         //int body = PlayerPrefs.GetInt("bodyIndex", 0);
         //BodyDropDown.value = body;
 
-        int camera = PlayerPrefs.GetInt("cameraIndex", 1);
-        CameraDropDown.value = camera;
+        cameraPick = PlayerPrefs.GetInt("cameraIndex", 1);
+        CameraDropDown.value = cameraPick;
 
-        int quality = PlayerPrefs.GetInt("qualityIndex", 0);
+        quality = PlayerPrefs.GetInt("qualityIndex", 0);
         QualityDropDown.value = quality;
 
-        int axle = PlayerPrefs.GetInt("axleIndex", 1);
+        axle = PlayerPrefs.GetInt("axleIndex", 1);
         AxleDropDown.value = axle;
 
-        int fps = PlayerPrefs.GetInt("fpsIndex", 5);
+        fps = PlayerPrefs.GetInt("fpsIndex", 1);
         switch (fps)
         {
             case 0:
@@ -120,33 +134,34 @@ public class PauseMenu : MonoBehaviour
         }
         FPSDropDown.value = fps;
 
-        int motor = PlayerPrefs.GetInt("motorIndex", 1);
+        motor = PlayerPrefs.GetInt("motorIndex", 1);
         MotorDropDown.value = motor;
 
-        int transmission = PlayerPrefs.GetInt("transmissionIndex", 1);
+        transmission = PlayerPrefs.GetInt("transmissionIndex", 1);
         TransmissionDropDown.value = transmission;
 
-        int tire = PlayerPrefs.GetInt("tireIndex", 0);
+        tire = PlayerPrefs.GetInt("tireIndex", 0);
         TireDropDown.value = tire;
 
-        int steeringPower = PlayerPrefs.GetInt("steeringPowerIndex", 1);
+        steeringPower = PlayerPrefs.GetInt("steeringPowerIndex", 1);
         SteeringPowerDropDown.value = steeringPower;
 
-        int steeringAngle = PlayerPrefs.GetInt("steeringAngleIndex", 0);
+        steeringAngle = PlayerPrefs.GetInt("steeringAngleIndex", 0);
         SteeringAngleDropDown.value = steeringAngle;
 
-        int suspension = PlayerPrefs.GetInt("suspensionIndex", 1);
+        suspension = PlayerPrefs.GetInt("suspensionIndex", 3);
         SuspensionDropDown.value = suspension;
 
-        int handbrake = PlayerPrefs.GetInt("handbrakeIndex", 1);
+        handbrake = PlayerPrefs.GetInt("handbrakeIndex", 1);
         HandbrakeDropDown.value = handbrake;
 
-        int passive = PlayerPrefs.GetInt("passiveIndex", 0);
+        passive = PlayerPrefs.GetInt("passiveIndex", 0);
         PassiveDropDown.value = passive;
 
-        int useButton = PlayerPrefs.GetInt("useButtonIndex", 0);
+        useButton = PlayerPrefs.GetInt("useButtonIndex", 0);
         UseButtonDropDown.value = useButton;
 
+        CheckPlayerChoices();
         //Debug.Log(fps);
     }
 
@@ -159,6 +174,21 @@ public class PauseMenu : MonoBehaviour
 
         //Debug.Log(FPSDropDown.value);
         //Debug.Log(PlayerPrefs.GetInt("fpsIndex"));
+    }
+    public void CheckPlayerChoices()
+    {
+        SetCamera(cameraPick);
+        SetQuality(quality);
+        SetFPS(fps);
+        SetMotor(motor);
+        SetTransmission(transmission);
+        SetTire(tire);
+        SetSteeringPower(steeringPower);
+        SetSteeringAngle(steeringAngle);
+        SetSuspension(suspension);
+        SetHandbrake(handbrake);
+        SetPassive(passive);
+        SetUseButton(useButton);
     }
 
     public void OnPause()
@@ -301,6 +331,25 @@ public class PauseMenu : MonoBehaviour
 
         PlayerPrefs.SetInt("cameraIndex", cameraIndex);
     }
+    public void CameraFlop(bool inAir) //fixes camera when in air
+    {
+        if (inAir)
+        {
+            if (cameraTransposer.m_BindingMode == CinemachineOrbitalTransposer.BindingMode.LockToTargetWithWorldUp)
+            {
+                cameraTransposer.m_BindingMode = CinemachineOrbitalTransposer.BindingMode.SimpleFollowWithWorldUp;
+            }
+        }
+
+        if (!inAir)
+        {
+            if (PlayerPrefs.GetInt("cameraIndex") == 0 || PlayerPrefs.GetInt("cameraIndex") == 1 || PlayerPrefs.GetInt("cameraIndex") == 2)
+            {
+                cameraTransposer.m_BindingMode = CinemachineTransposer.BindingMode.LockToTargetWithWorldUp;
+            }
+        }
+    }
+
     public void SetPoweredAxle(int axleIndex)
     {
         if (axleIndex == 0)
@@ -515,6 +564,14 @@ public class PauseMenu : MonoBehaviour
         //Application.SetTargetFrameRate(fpsIndex);
         //Application.targetFrameRate = fpsIndex;
         PlayerPrefs.SetInt("fpsIndex", fpsIndex);
+    }
+    public void ResetPlayerPrefs()
+    {
+        int tempBody = PlayerPrefs.GetInt("bodyIndex");
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.SetInt("bodyIndex", tempBody);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void QuitGame()
     {
