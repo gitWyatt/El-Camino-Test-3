@@ -8,9 +8,16 @@ using Cinemachine;
 
 public class CarController : MonoBehaviour
 {
+    [SerializeField] public bool camFlopFlag;
+
     CarEffects carEffects;
 
     CarBodySelection carBodySelection;
+
+    [SerializeField] WheelCoverCode flCoverCode;
+    [SerializeField] WheelCoverCode frCoverCode;
+    [SerializeField] WheelCoverCode blCoverCode;
+    [SerializeField] WheelCoverCode brCoverCode;
 
     public InputMaster controls;
 
@@ -39,6 +46,7 @@ public class CarController : MonoBehaviour
     private float resetCheck;
     private float flipCheck;
     private float engageCheck;
+    private float stallCheck;
 
     public bool isCamming;
     public bool isBraking;
@@ -46,9 +54,19 @@ public class CarController : MonoBehaviour
     private bool isResetting;
     private bool isFlipping;
     private bool isEngaging;
+    private bool isStalling;
+
 
     public bool touchingGround;
-    //private float distToGround = 0.505f;
+    public bool flTouchingGround;
+    public bool frTouchingGround;
+    public bool blTouchingGround;
+    public bool brTouchingGround;
+    public bool slidingFlag;
+    public bool flSlidingFlag;
+    public bool frSlidingFlag;
+    public bool blSlidingFlag;
+    public bool brSlidingFlag;
 
     [SerializeField] private bool dragExists;
     [SerializeField] private float dragMultiple;
@@ -81,6 +99,7 @@ public class CarController : MonoBehaviour
     [SerializeField] public bool airBoosting = false;
     [SerializeField] public bool groundBoosting = false;
 
+    public float stallCounter = 40f;
     public float playerAirThrusterFuel = 100f;
     public bool airThrusterFlag = false;
     [SerializeField] private float maxAirThrusterFuel = 100f;
@@ -180,6 +199,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private float controlYawFactor;
     [SerializeField] private float controlRollFactor;
 
+    [SerializeField] public GameObject wheelColliderGroup;
     [SerializeField] public WheelCollider frontLeftWheelCollider;
     [SerializeField] public WheelCollider frontRightWheelCollider;
     [SerializeField] public WheelCollider backLeftWheelCollider;
@@ -209,10 +229,37 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform backLeftBigWheelTransform;
     [SerializeField] private Transform backRightBigWheelTransform;
 
+    [SerializeField] private Collider frWheelCover;
+    [SerializeField] private Collider flWheelCover;
+    [SerializeField] private Collider brWheelCover;
+    [SerializeField] private Collider blWheelCover;
+
+    [SerializeField] private GameObject frWheelRigid;
+    [SerializeField] private GameObject flWheelRigid;
+    [SerializeField] private GameObject brWheelRigid;
+    [SerializeField] private GameObject blWheelRigid;
+
+    float frontLeftWheelSidewaysFrictionTemp = 99;
+    float frontLeftWheelForwardFrictionTemp = 99;
+    float frontRightWheelSidewaysFrictionTemp = 99;
+    float frontRightWheelForwardFrictionTemp = 99;
+    float backLeftWheelSidewaysFrictionTemp = 99;
+    float backLeftWheelForwardFrictionTemp = 99;
+    float backRightWheelSidewaysFrictionTemp = 99;
+    float backRightWheelForwardFrictionTemp = 99;
+
+    float flSpringTemp;
+    float frSpringTemp;
+    float blSpringTemp;
+    float brSpringTemp;
+
     [SerializeField] CinemachineVirtualCamera CMCamera;
     CinemachineTransposer cameraOrbitalTransposer;
 
     Color thatPurpleyColor;
+
+    PhysicMaterial slippery;
+
 
     private void Awake()
     {
@@ -262,6 +309,7 @@ public class CarController : MonoBehaviour
         HandleCamera();
         UpdateWheels();
         ResetCheck();
+        //CheckGround();
         DebugToConsole();
     }
 
@@ -284,6 +332,9 @@ public class CarController : MonoBehaviour
         controls.Player.Passiveitemswap.performed += HandleSwitching;
         controls.Player.Useitemswap.performed += HandleSwitching;
         controls.Player.Pause.performed += PauseHandler;
+        stallCheck = controls.Player.Stall.ReadValue<float>();
+        stallCheck = controls.Player.Stall.ReadValue<float>();
+        //controls.Player.CameraLock.performed += CameraLocker;
 
         if (brakeCheck > .5)
         { isBraking = true; }
@@ -308,25 +359,175 @@ public class CarController : MonoBehaviour
         if (Mathf.Abs(cameraVerticalInput) > .1f && Mathf.Abs(cameraHorizontalInput) > .1f)
         { isCamming = true; }
         else { isCamming = false; }
+
+        if (stallCheck > .5)
+        { isStalling = true; }
+        else { isStalling = false; }
     }
+
 
     void CheckGround()
     {
-        //float distToGround = frontLeftWheelCollider.bounds.extents.y;
-        //if (Physics.Raycast(frontLeftWheelTransform.position, -Vector3.up, distToGround) &&
-        //    Physics.Raycast(frontRightWheelTransform.position, -Vector3.up, distToGround) &&
-        //    Physics.Raycast(backLeftWheelTransform.position, -Vector3.up, distToGround) &&
-        //    Physics.Raycast(backRightWheelTransform.position, -Vector3.up, distToGround))
-        //{
-        //    touchingGround = true;
-        //}
-        //else
-        //{
-        //    touchingGround = false;
-        //}
-        //Debug.Log(touchingGround);
+        WheelFrictionCurve frontLeftWheelSidewaysFriction = frontLeftWheelCollider.sidewaysFriction;
+        WheelFrictionCurve frontLeftWheelForwardFriction = frontLeftWheelCollider.forwardFriction;
+        WheelFrictionCurve frontRightWheelSidewaysFriction = frontRightWheelCollider.sidewaysFriction;
+        WheelFrictionCurve frontRightWheelForwardFriction = frontRightWheelCollider.forwardFriction;
+        WheelFrictionCurve backLeftWheelSidewaysFriction = backLeftWheelCollider.sidewaysFriction;
+        WheelFrictionCurve backLeftWheelForwardFriction = backLeftWheelCollider.forwardFriction;
+        WheelFrictionCurve backRightWheelSidewaysFriction = backRightWheelCollider.sidewaysFriction;
+        WheelFrictionCurve backRightWheelForwardFriction = backRightWheelCollider.forwardFriction;
 
-        if (frontLeftWheelCollider.isGrounded && backLeftWheelCollider.isGrounded && frontRightWheelCollider.isGrounded && backRightWheelCollider.isGrounded)
+        //flTouchingGround = false;
+        //frTouchingGround = false;
+        //blTouchingGround = false;
+        //brTouchingGround = false;
+
+        //flWheelCover.gameObject.SetActive(false);
+        //frWheelCover.gameObject.SetActive(false);
+        //blWheelCover.gameObject.SetActive(false);
+        //brWheelCover.gameObject.SetActive(false);
+
+        if (frontLeftWheelCollider.GetGroundHit(out WheelHit hitFrontLeft) == true)
+        {
+            flTouchingGround = true;
+
+            if (frontLeftWheelSidewaysFriction.stiffness != 0)
+            {
+                frontLeftWheelSidewaysFrictionTemp = frontLeftWheelSidewaysFriction.stiffness;
+            }
+            if (frontLeftWheelForwardFriction.stiffness != 0)
+            {
+                frontLeftWheelForwardFrictionTemp = frontLeftWheelForwardFriction.stiffness;
+            }
+
+            if (hitFrontLeft.collider.tag == "lowFriction")
+            {
+                flSlidingFlag = true;
+                frontLeftWheelSidewaysFriction.stiffness = 0;
+                frontLeftWheelForwardFriction.stiffness = 0;
+                frontLeftWheelCollider.sidewaysFriction = frontLeftWheelSidewaysFriction;
+                frontLeftWheelCollider.forwardFriction = frontLeftWheelForwardFriction;
+            }
+            else
+            {
+                flSlidingFlag = false;
+                frontLeftWheelSidewaysFriction.stiffness = frontLeftWheelSidewaysFrictionTemp;
+                frontLeftWheelForwardFriction.stiffness = frontLeftWheelForwardFrictionTemp;
+                frontLeftWheelCollider.sidewaysFriction = frontLeftWheelSidewaysFriction;
+                frontLeftWheelCollider.forwardFriction = frontLeftWheelForwardFriction;
+            }
+        }
+        else
+        {
+            flTouchingGround = false;
+        }
+
+        if (frontRightWheelCollider.GetGroundHit(out WheelHit hitFrontRight) == true)
+        {
+            frTouchingGround = true;
+
+            if (frontRightWheelSidewaysFriction.stiffness != 0)
+            {
+                frontRightWheelSidewaysFrictionTemp = frontRightWheelSidewaysFriction.stiffness;
+            }
+            if (frontRightWheelForwardFriction.stiffness != 0)
+            {
+                frontRightWheelForwardFrictionTemp = frontRightWheelForwardFriction.stiffness;
+            }
+
+            if (hitFrontRight.collider.tag == "lowFriction")
+            {
+                frSlidingFlag = true;
+                frontRightWheelSidewaysFriction.stiffness = 0;
+                frontRightWheelForwardFriction.stiffness = 0;
+                frontRightWheelCollider.sidewaysFriction = frontRightWheelSidewaysFriction;
+                frontRightWheelCollider.forwardFriction = frontRightWheelForwardFriction;
+            }
+            else
+            {
+                frSlidingFlag = false;
+                frontRightWheelSidewaysFriction.stiffness = frontRightWheelSidewaysFrictionTemp;
+                frontRightWheelForwardFriction.stiffness = frontRightWheelForwardFrictionTemp;
+                frontRightWheelCollider.sidewaysFriction = frontRightWheelSidewaysFriction;
+                frontRightWheelCollider.forwardFriction = frontRightWheelForwardFriction;
+            }
+        }
+        else
+        {
+            frTouchingGround = false;
+        }
+
+        if (backLeftWheelCollider.GetGroundHit(out WheelHit hitBackLeft) == true)
+        {
+            blTouchingGround = true;
+
+            if (backLeftWheelSidewaysFriction.stiffness != 0)
+            {
+                backLeftWheelSidewaysFrictionTemp = backLeftWheelSidewaysFriction.stiffness;
+            }
+            if (backLeftWheelForwardFriction.stiffness != 0)
+            {
+                backLeftWheelForwardFrictionTemp = backLeftWheelForwardFriction.stiffness;
+            }
+
+            if (hitBackLeft.collider.tag == "lowFriction")
+            {
+                blSlidingFlag = true;
+                backLeftWheelSidewaysFriction.stiffness = 0;
+                backLeftWheelForwardFriction.stiffness = 0;
+                backLeftWheelCollider.sidewaysFriction = backLeftWheelSidewaysFriction;
+                backLeftWheelCollider.forwardFriction = backLeftWheelForwardFriction;
+            }
+            else
+            {
+                blSlidingFlag = false;
+                backLeftWheelSidewaysFriction.stiffness = backLeftWheelSidewaysFrictionTemp;
+                backLeftWheelForwardFriction.stiffness = backLeftWheelForwardFrictionTemp;
+                backLeftWheelCollider.sidewaysFriction = backLeftWheelSidewaysFriction;
+                backLeftWheelCollider.forwardFriction = backLeftWheelForwardFriction;
+            }
+        }
+        else
+        {
+            blTouchingGround = false;
+        }
+
+        if (backRightWheelCollider.GetGroundHit(out WheelHit hitBackRight) == true)
+        {
+            brTouchingGround = true;
+
+            if (backRightWheelSidewaysFriction.stiffness != 0)
+            {
+                backRightWheelSidewaysFrictionTemp = backRightWheelSidewaysFriction.stiffness;
+            }
+            if (backRightWheelForwardFriction.stiffness != 0)
+            {
+                backRightWheelForwardFrictionTemp = backRightWheelForwardFriction.stiffness;
+            }
+
+            if (hitBackRight.collider.tag == "lowFriction")
+            {
+                brSlidingFlag = true;
+                backRightWheelSidewaysFriction.stiffness = 0;
+                backRightWheelForwardFriction.stiffness = 0;
+                backRightWheelCollider.sidewaysFriction = backRightWheelSidewaysFriction;
+                backRightWheelCollider.forwardFriction = backRightWheelForwardFriction;
+            }
+            else
+            {
+                brSlidingFlag = false;
+                backRightWheelSidewaysFriction.stiffness = backRightWheelSidewaysFrictionTemp;
+                backRightWheelForwardFriction.stiffness = backRightWheelForwardFrictionTemp;
+                backRightWheelCollider.sidewaysFriction = backRightWheelSidewaysFriction;
+                backRightWheelCollider.forwardFriction = backRightWheelForwardFriction;
+            }
+        }
+        else
+        {
+            brTouchingGround = false;
+        }
+
+        if (flTouchingGround && frTouchingGround && blTouchingGround && brTouchingGround)
         {
             touchingGround = true;
         }
@@ -334,7 +535,177 @@ public class CarController : MonoBehaviour
         {
             touchingGround = false;
         }
+
+        if (flSlidingFlag || frSlidingFlag || blSlidingFlag || brSlidingFlag)
+        {
+            slidingFlag = true;
+        }
+        else
+        {
+            slidingFlag = false;
+        }
+
+
+        //if (flCoverCode.coverTouchingGround == false && frCoverCode.coverTouchingGround == false && blCoverCode.coverTouchingGround == false && brCoverCode.coverTouchingGround == false)
+        //{
+        //    flWheelRigid.gameObject.SetActive(true);
+        //    frWheelRigid.gameObject.SetActive(true);
+        //    blWheelRigid.gameObject.SetActive(true);
+        //    brWheelRigid.gameObject.SetActive(true);
+        //}
+        
+        //if (flCoverCode.coverTouchingGround == true || frCoverCode.coverTouchingGround == true || blCoverCode.coverTouchingGround == true || brCoverCode.coverTouchingGround == true)
+        //{
+        //    flWheelRigid.gameObject.SetActive(false);
+        //    frWheelRigid.gameObject.SetActive(false);
+        //    blWheelRigid.gameObject.SetActive(false);
+        //    brWheelRigid.gameObject.SetActive(false);
+        //}
+
+        if (flCoverCode.coverTouchingGround == false)
+        {
+            flWheelRigid.gameObject.SetActive(true);
+        }
+        else
+        {
+            flWheelRigid.gameObject.SetActive(false);
+        }
+
+        if (frCoverCode.coverTouchingGround == false)
+        {
+            frWheelRigid.gameObject.SetActive(true);
+        }
+        else
+        {
+            frWheelRigid.gameObject.SetActive(false);
+        }
+
+        if (blCoverCode.coverTouchingGround == false)
+        {
+            blWheelRigid.gameObject.SetActive(true);
+        }
+        else
+        {
+            blWheelRigid.gameObject.SetActive(false);
+        }
+
+        if (brCoverCode.coverTouchingGround == false)
+        {
+            brWheelRigid.gameObject.SetActive(true);
+        }
+        else
+        {
+            brWheelRigid.gameObject.SetActive(false);
+        }
+
+
+        Debug.Log(flCoverCode.coverTouchingGround);
+
+        //Debug.Log("slidingflag: " + slidingFlag);
+
+        //old code
+        { 
+        //if (frontLeftWheelCollider.GetGroundHit(out WheelHit hitFrontLeft) == true && frontRightWheelCollider.GetGroundHit(out WheelHit hitFrontRight) == true && backLeftWheelCollider.GetGroundHit(out WheelHit hitBackLeft) && backRightWheelCollider.GetGroundHit(out WheelHit hitBackRight))
+        //{
+        //    touchingGround = true;
+
+
+        //    if (frontLeftWheelSidewaysFriction.stiffness != 0)
+        //    {
+        //        frontLeftWheelSidewaysFrictionTemp = frontLeftWheelSidewaysFriction.stiffness;
+        //    }
+        //    if (frontLeftWheelForwardFriction.stiffness != 0)
+        //    {
+        //        frontLeftWheelForwardFrictionTemp = frontLeftWheelForwardFriction.stiffness;
+        //    }
+        //    if (frontRightWheelSidewaysFriction.stiffness != 0)
+        //    {
+        //        frontRightWheelSidewaysFrictionTemp = frontRightWheelSidewaysFriction.stiffness;
+        //    }
+        //    if (frontRightWheelForwardFriction.stiffness != 0)
+        //    {
+        //        frontRightWheelForwardFrictionTemp = frontRightWheelForwardFriction.stiffness;
+        //    }
+        //    if (backLeftWheelSidewaysFriction.stiffness != 0)
+        //    {
+        //        backLeftWheelSidewaysFrictionTemp = backLeftWheelSidewaysFriction.stiffness;
+        //    }
+        //    if (backLeftWheelForwardFriction.stiffness != 0)
+        //    {
+        //        backLeftWheelForwardFrictionTemp = backLeftWheelForwardFriction.stiffness;
+        //    }
+        //    if (backRightWheelSidewaysFriction.stiffness != 0)
+        //    {
+        //        backRightWheelSidewaysFrictionTemp = backRightWheelSidewaysFriction.stiffness;
+        //    }
+        //    if (backRightWheelForwardFriction.stiffness != 0)
+        //    {
+        //        backRightWheelForwardFrictionTemp = backRightWheelForwardFriction.stiffness;
+        //    }
+
+        //    if (hitFrontLeft.collider.tag == "lowFriction" || hitFrontRight.collider.tag == "lowFriction" || hitBackLeft.collider.tag == "lowFriction" || hitBackRight.collider.tag == "lowFriction" /*|| !touchingGround*/)
+        //    {
+        //        slidingFlag = true;
+        //        frontLeftWheelSidewaysFriction.stiffness = 0;
+        //        frontLeftWheelForwardFriction.stiffness = 0;
+        //        frontLeftWheelCollider.sidewaysFriction = frontLeftWheelSidewaysFriction;
+        //        frontLeftWheelCollider.forwardFriction = frontLeftWheelForwardFriction;
+        //        frontRightWheelSidewaysFriction.stiffness = 0;
+        //        frontRightWheelForwardFriction.stiffness = 0;
+        //        frontRightWheelCollider.sidewaysFriction = frontRightWheelSidewaysFriction;
+        //        frontRightWheelCollider.forwardFriction = frontRightWheelForwardFriction;
+        //        backLeftWheelSidewaysFriction.stiffness = 0;
+        //        backLeftWheelForwardFriction.stiffness = 0;
+        //        backLeftWheelCollider.sidewaysFriction = backLeftWheelSidewaysFriction;
+        //        backLeftWheelCollider.forwardFriction = backLeftWheelForwardFriction;
+        //        backRightWheelSidewaysFriction.stiffness = 0;
+        //        backRightWheelForwardFriction.stiffness = 0;
+        //        backRightWheelCollider.sidewaysFriction = backRightWheelSidewaysFriction;
+        //        backRightWheelCollider.forwardFriction = backRightWheelForwardFriction;
+        //    }
+        //    else
+        //    {
+        //        slidingFlag = false;
+        //        frontLeftWheelSidewaysFriction.stiffness = frontLeftWheelSidewaysFrictionTemp;
+        //        frontLeftWheelForwardFriction.stiffness = frontLeftWheelForwardFrictionTemp;
+        //        frontLeftWheelCollider.sidewaysFriction = frontLeftWheelSidewaysFriction;
+        //        frontLeftWheelCollider.forwardFriction = frontLeftWheelForwardFriction;
+        //        frontRightWheelSidewaysFriction.stiffness = frontRightWheelSidewaysFrictionTemp;
+        //        frontRightWheelForwardFriction.stiffness = frontRightWheelForwardFrictionTemp;
+        //        frontRightWheelCollider.sidewaysFriction = frontRightWheelSidewaysFriction;
+        //        frontRightWheelCollider.forwardFriction = frontRightWheelForwardFriction;
+        //        backLeftWheelSidewaysFriction.stiffness = backLeftWheelSidewaysFrictionTemp;
+        //        backLeftWheelForwardFriction.stiffness = backLeftWheelForwardFrictionTemp;
+        //        backLeftWheelCollider.sidewaysFriction = backLeftWheelSidewaysFriction;
+        //        backLeftWheelCollider.forwardFriction = backLeftWheelForwardFriction;
+        //        backRightWheelSidewaysFriction.stiffness = backRightWheelSidewaysFrictionTemp;
+        //        backRightWheelForwardFriction.stiffness = backRightWheelForwardFrictionTemp;
+        //        backRightWheelCollider.sidewaysFriction = backRightWheelSidewaysFriction;
+        //        backRightWheelCollider.forwardFriction = backRightWheelForwardFriction;
+        //    }
+
+        //        //Debug.Log("frontLeftWheelForwardFrictionTemp: " + frontLeftWheelForwardFrictionTemp);
+        //        //Debug.Log("wheelhit output: " + hitFrontLeft.collider.tag);
+        //}
+        //else
+        //{
+        //    slidingFlag = false;
+        //    touchingGround = false;
+        //}
+
+        //freeze rotation when sliding
+
+        //if (slidingFlag)
+        //{
+        //    carRigidBody.freezeRotation = true;
+        //}
+        //else
+        //{
+        //    carRigidBody.freezeRotation = false;
+        //}
+        }
     }
+
 
     private void HandleSuspension()
     {
@@ -371,10 +742,146 @@ public class CarController : MonoBehaviour
                 break;
         }
 
+        
+        //this needs attention
+        if (flSpring.spring != 0)
+        {
+            flSpringTemp = flSpring.spring;
+        }
+        if (frSpring.spring != 0)
+        {
+            frSpringTemp = frSpring.spring;
+        }
+        if (blSpring.spring != 0)
+        {
+            blSpringTemp = blSpring.spring;
+        }
+        if (brSpring.spring != 0)
+        {
+            blSpringTemp = brSpring.spring;
+        }
+
+        //if (slidingFlag)
+        //{
+        //    flSpring.spring = 0;
+        //    flSpring.targetPosition = 0;
+        //    frSpring.spring = 0;
+        //    frSpring.targetPosition = 0;
+        //    blSpring.spring = 0;
+        //    blSpring.targetPosition = 0;
+        //    brSpring.spring = 0;
+        //    brSpring.targetPosition = 0;
+
+        //    flSpring.damper = 20000;
+        //    frSpring.damper = 20000;
+        //    blSpring.damper = 20000;
+        //    brSpring.damper = 20000;
+
+        //    //frontLeftWheelCollider.forceAppPointDistance = 100;
+        //    //frontRightWheelCollider.forceAppPointDistance = 100;
+        //    //backLeftWheelCollider.forceAppPointDistance = 100;
+        //    //backRightWheelCollider.forceAppPointDistance = 100;
+        //}
+
+        //if (!slidingFlag)
+        //{
+        //    flSpring.spring = flSpringTemp;
+        //    flSpring.targetPosition = 0.5f;
+        //    frSpring.spring = frSpringTemp;
+        //    frSpring.targetPosition = 0.5f;
+        //    blSpring.spring = blSpringTemp;
+        //    blSpring.targetPosition = 0.5f;
+        //    brSpring.spring = brSpringTemp;
+        //    brSpring.targetPosition = 0.5f;
+
+        //    //frontLeftWheelCollider.forceAppPointDistance = 0;
+        //    //frontRightWheelCollider.forceAppPointDistance = 0;
+        //    //backLeftWheelCollider.forceAppPointDistance = 0;
+        //    //backRightWheelCollider.forceAppPointDistance = 0;
+        //}
+
+        if (!touchingGround)
+        {
+            frontLeftWheelCollider.ResetSprungMasses();
+            frontRightWheelCollider.ResetSprungMasses();
+            backLeftWheelCollider.ResetSprungMasses();
+            backRightWheelCollider.ResetSprungMasses();
+
+            flSpring.spring = 0;
+            flSpring.targetPosition = 0;
+            frSpring.spring = 0;
+            frSpring.targetPosition = 0;
+            blSpring.spring = 0;
+            blSpring.targetPosition = 0;
+            brSpring.spring = 0;
+            brSpring.targetPosition = 0;
+
+            flSpring.damper = 0;
+            frSpring.damper = 0;
+            blSpring.damper = 0;
+            brSpring.damper = 0;
+
+            frontLeftWheelCollider.suspensionDistance = 0.2f;
+            frontRightWheelCollider.suspensionDistance = 0.2f;
+            backLeftWheelCollider.suspensionDistance = 0.2f;
+            backRightWheelCollider.suspensionDistance = 0.2f;
+        }
+
+        if (slidingFlag)
+        {
+            frontLeftWheelCollider.sprungMass = 0;
+            frontRightWheelCollider.sprungMass = 0;
+            backLeftWheelCollider.sprungMass = 0;
+            backRightWheelCollider.sprungMass = 0;
+
+            flSpring.spring = 0;
+            flSpring.targetPosition = 0;
+            frSpring.spring = 0;
+            frSpring.targetPosition = 0;
+            blSpring.spring = 0;
+            blSpring.targetPosition = 0;
+            brSpring.spring = 0;
+            brSpring.targetPosition = 0;
+
+            flSpring.damper = 0;
+            frSpring.damper = 0;
+            blSpring.damper = 0;
+            brSpring.damper = 0;
+
+            frontLeftWheelCollider.suspensionDistance = 0;
+            frontRightWheelCollider.suspensionDistance = 0;
+            backLeftWheelCollider.suspensionDistance = 0;
+            backRightWheelCollider.suspensionDistance = 0;
+        }
+
+        if (!slidingFlag && touchingGround)
+        {
+            frontLeftWheelCollider.ResetSprungMasses();
+            frontRightWheelCollider.ResetSprungMasses();
+            backLeftWheelCollider.ResetSprungMasses();
+            backRightWheelCollider.ResetSprungMasses();
+
+            flSpring.spring = flSpringTemp;
+            flSpring.targetPosition = 0.5f;
+            frSpring.spring = frSpringTemp;
+            frSpring.targetPosition = 0.5f;
+            blSpring.spring = blSpringTemp;
+            blSpring.targetPosition = 0.5f;
+            brSpring.spring = brSpringTemp;
+            brSpring.targetPosition = 0.5f;
+
+            frontLeftWheelCollider.suspensionDistance = 0.3f;
+            frontRightWheelCollider.suspensionDistance = 0.3f;
+            backLeftWheelCollider.suspensionDistance = 0.3f;
+            backRightWheelCollider.suspensionDistance = 0.3f;
+        }
+
         frontLeftWheelCollider.suspensionSpring = flSpring;
         frontRightWheelCollider.suspensionSpring = frSpring;
         backLeftWheelCollider.suspensionSpring = blSpring;
         backRightWheelCollider.suspensionSpring = frSpring;
+
+        
     }
 
     private void HandleHandbrake()
@@ -460,6 +967,17 @@ public class CarController : MonoBehaviour
         }
 
         currentBrakeForce = isBraking ? brakeForce : 0f;
+
+
+        //lock wheels when stalling
+        if (isStalling)
+        {
+            frontLeftWheelCollider.motorTorque = 0;
+            frontRightWheelCollider.motorTorque = 0;
+            backLeftWheelCollider.motorTorque = 0;
+            backRightWheelCollider.motorTorque = 0;
+        }
+
         ApplyBraking();
     }
 
@@ -788,21 +1306,21 @@ public class CarController : MonoBehaviour
         if (Vector3.Distance(transform.forward, Vector3.Normalize(carRigidBody.velocity)) < .05f)
         {
             standardSidewaysStiffness = standardSidewaysStiffness * 3f;
-            Debug.Log("big foo");
+            //Debug.Log("big foo");
         }
         else if (Vector3.Distance(transform.forward, Vector3.Normalize(carRigidBody.velocity)) >= .05f && Vector3.Distance(transform.forward, Vector3.Normalize(carRigidBody.velocity)) < .2f)
         {
             standardSidewaysStiffness = standardSidewaysStiffness * 2.5f;
-            Debug.Log("Foo");
+            //Debug.Log("Foo");
         }
         else if (Vector3.Distance(transform.forward, Vector3.Normalize(carRigidBody.velocity)) > .35f)
         {
             standardSidewaysStiffness = standardSidewaysStiffness * .9f;
-            Debug.Log("Bar");
+            //Debug.Log("Bar");
         }
         else
         {
-            Debug.Log("spam");
+            //Debug.Log("spam");
         }
 
         //Debug.Log(Vector3.Distance(transform.forward, Vector3.Normalize(carRigidBody.velocity)));
@@ -875,6 +1393,27 @@ public class CarController : MonoBehaviour
             frontRightWheelCollider.sidewaysFriction = frontRightWheelSidewaysFriction;
             backLeftWheelCollider.sidewaysFriction = backLeftWheelSidewaysFriction;
             backRightWheelCollider.sidewaysFriction = backRightWheelSidewaysFriction;
+        }
+
+        //set to zero when sliding
+        if (slidingFlag)
+        {
+            frontLeftWheelSidewaysFriction.stiffness = 0;
+            frontLeftWheelForwardFriction.stiffness = 0;
+            frontLeftWheelCollider.sidewaysFriction = frontLeftWheelSidewaysFriction;
+            frontLeftWheelCollider.forwardFriction = frontLeftWheelForwardFriction;
+            frontRightWheelSidewaysFriction.stiffness = 0;
+            frontRightWheelForwardFriction.stiffness = 0;
+            frontRightWheelCollider.sidewaysFriction = frontRightWheelSidewaysFriction;
+            frontRightWheelCollider.forwardFriction = frontRightWheelForwardFriction;
+            backLeftWheelSidewaysFriction.stiffness = 0;
+            backLeftWheelForwardFriction.stiffness = 0;
+            backLeftWheelCollider.sidewaysFriction = backLeftWheelSidewaysFriction;
+            backLeftWheelCollider.forwardFriction = backLeftWheelForwardFriction;
+            backRightWheelSidewaysFriction.stiffness = 0;
+            backRightWheelForwardFriction.stiffness = 0;
+            backRightWheelCollider.sidewaysFriction = backRightWheelSidewaysFriction;
+            backRightWheelCollider.forwardFriction = backRightWheelForwardFriction;
         }
     }
 
@@ -1001,6 +1540,57 @@ public class CarController : MonoBehaviour
 
     private void HandleRotation()
     {
+        if (isStalling)
+        {
+            if (stallCounter > 0 && !touchingGround)
+            {
+                carRigidBody.angularDrag = 100;
+
+                //carRigidBody.freezeRotation = true;
+                stallCounter -= 1f;
+                frontLeftWheelCollider.motorTorque = 0;
+                frontRightWheelCollider.motorTorque = 0;
+                backLeftWheelCollider.motorTorque = 0;
+                backRightWheelCollider.motorTorque = 0;
+                ApplyBraking();
+            }
+            else
+            {
+                carRigidBody.angularDrag = .05f;
+
+                //carRigidBody.freezeRotation = false;
+            }
+
+            //carRigidBody.freezeRotation = true;
+            //ApplyBraking();
+            //carRigidBody.constraints = RigidbodyConstraints.FreezeRotationX;
+            //carRigidBody.constraints = RigidbodyConstraints.FreezeRotationY;
+            //carRigidBody.constraints = RigidbodyConstraints.FreezeRotationZ;
+        }
+
+        if (!isStalling)
+        {
+            carRigidBody.angularDrag = .05f;
+
+            //carRigidBody.freezeRotation = false;
+
+            if (stallCounter < 40)
+            {
+                stallCounter = 40;
+            }
+
+            //carRigidBody.constraints = RigidbodyConstraints.None;
+        }
+        //Debug.Log("stallCounter: " + stallCounter);
+
+        //if (touchingGround)
+        //{
+        //    if (stallCounter < 10)
+        //    {
+        //        stallCounter = 10;
+        //    }
+        //}
+
         if (touchingGround == false)
         {
             if (frontWheelDrive && !rearWheelDrive)
@@ -1098,8 +1688,8 @@ public class CarController : MonoBehaviour
 
 
 
-        Debug.Log("passiveIndex: " + PlayerPrefs.GetInt("passiveIndex"));
-        Debug.Log("useButtonIndex: " + PlayerPrefs.GetInt("useButtonIndex"));
+        //Debug.Log("passiveIndex: " + PlayerPrefs.GetInt("passiveIndex"));
+        //Debug.Log("useButtonIndex: " + PlayerPrefs.GetInt("useButtonIndex"));
 
 
 
@@ -1321,7 +1911,14 @@ public class CarController : MonoBehaviour
                 if (playerAirThrusterFuel <= airThrusterCutoff) { airThrusterFlag = false; } 
                 else { airThrusterFlag = true; }
 
-                playerAirThrusterFuel += airThrusterRegen;
+                if (!touchingGround)
+                {
+                    playerAirThrusterFuel += (airThrusterRegen * 4);
+                }
+                else
+                {
+                    playerAirThrusterFuel += airThrusterRegen;
+                }
             }
 
             airBoosting = false;
@@ -1410,18 +2007,26 @@ public class CarController : MonoBehaviour
     }
     private void HandleCamera()  //fixes camera when in air
     {
-        if (!touchingGround)
+        if (camFlopFlag)
         {
-            if (PlayerPrefs.GetInt("cameraIndex") == 0 || PlayerPrefs.GetInt("cameraIndex") == 1 || PlayerPrefs.GetInt("cameraIndex") == 2)
+            if (!touchingGround || slidingFlag)
             {
                 pauseMenu.CameraFlop(true);
+                //if (PlayerPrefs.GetInt("cameraIndex") == 0 || PlayerPrefs.GetInt("cameraIndex") == 1 || PlayerPrefs.GetInt("cameraIndex") == 2)
+                //{
+                //    pauseMenu.CameraFlop(true);
+                //}
+            }
+            if (touchingGround && !slidingFlag)
+            {
+                pauseMenu.CameraFlop(false);
             }
         }
-        if (touchingGround)
-        {
-            pauseMenu.CameraFlop(false);
-        }
     }
+    //public void CameraLocker(InputAction.CallbackContext context)
+    //{
+    //    pauseMenu.CameraActionSwitch();
+    //}
     private void UpdateWheels()
     {
         UpdateSingleWheel(frontLeftWheelCollider, frontLeftWheelTransform);
@@ -1443,7 +2048,10 @@ public class CarController : MonoBehaviour
     {
         if (isResetting == true)
         {
+            int cameraChoiceTemp = PlayerPrefs.GetInt("cameraIndex");
+            pauseMenu.SetCamera(cameraChoiceTemp);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            pauseMenu.SetCamera(cameraChoiceTemp);
         }
         if (isFlipping == true)
         {
@@ -1455,7 +2063,12 @@ public class CarController : MonoBehaviour
 
     private void DebugToConsole()
     {
-        //Debug.Log();    
+        //Debug.Log("touchingGround: " + touchingGround);
+        //WheelFrictionCurve frontLeftWheelSidewaysFriction = frontLeftWheelCollider.sidewaysFriction;
+        //Debug.Log("frontLeftWheelSidewaysFriction.stiffness: " + frontLeftWheelSidewaysFriction.stiffness);
+        //var flSpring = frontLeftWheelCollider.suspensionSpring;
+        //Debug.Log("flspring.damper: " + flSpring.damper);
+
     }
 }
 

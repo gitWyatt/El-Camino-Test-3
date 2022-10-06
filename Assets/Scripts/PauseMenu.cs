@@ -17,8 +17,12 @@ public class PauseMenu : MonoBehaviour
 
     CarBodySelection carBodySelection;
 
-    [SerializeField] CinemachineVirtualCamera CMCamera;
-    CinemachineTransposer cameraTransposer;
+    [SerializeField] CinemachineVirtualCamera CMCameraLockWorldUp;
+    [SerializeField] CinemachineVirtualCamera CMCameraSimpleWorldUp;
+    CinemachineTransposer cameraTransposerLockWorldUp;
+    CinemachineTransposer cameraTransposerSimpleWorldUp;
+
+    [SerializeField] CinemachineVirtualCamera CMCameraActionCam;
 
     public GameObject pauseMenuUI;
 
@@ -165,7 +169,7 @@ public class PauseMenu : MonoBehaviour
         //Debug.Log(fps);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         //if(Application.targetFrameRate != fpsCheck)
         //{
@@ -174,6 +178,21 @@ public class PauseMenu : MonoBehaviour
 
         //Debug.Log(FPSDropDown.value);
         //Debug.Log(PlayerPrefs.GetInt("fpsIndex"));
+
+        //if (CMCameraLockWorldUp.gameObject.activeInHierarchy == true)
+        //{
+        //    Debug.Log("CMCameraLockWorldUp = true");
+        //}
+        //if (CMCameraSimpleWorldUp.gameObject.activeInHierarchy == true)
+        //{
+        //    Debug.Log("CMCameraSimpleWorldUp = true");
+        //}
+        //if (CMCameraActionCam.gameObject.activeInHierarchy == true)
+        //{
+        //    Debug.Log("CMCameraActionCam = true");
+        //}
+
+
     }
     public void CheckPlayerChoices()
     {
@@ -288,44 +307,94 @@ public class PauseMenu : MonoBehaviour
 
     public void SetCamera(int cameraIndex)
     {
-        cameraTransposer = CMCamera.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineOrbitalTransposer>();
+        cameraTransposerLockWorldUp = CMCameraLockWorldUp.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineOrbitalTransposer>();
+        cameraTransposerSimpleWorldUp = CMCameraSimpleWorldUp.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineOrbitalTransposer>();
+
         switch (cameraIndex)
         {
             case 0:
-                cameraTransposer.m_BindingMode = CinemachineOrbitalTransposer.BindingMode.LockToTargetWithWorldUp;
-                cameraTransposer.m_FollowOffset.y = 7f;
-                cameraTransposer.m_FollowOffset.z = -20f;
-                cameraTransposer.m_YawDamping = 1f;
+                CMCameraLockWorldUp.gameObject.SetActive(true);
+                cameraTransposerLockWorldUp.m_FollowOffset.y = 7f;
+                cameraTransposerLockWorldUp.m_FollowOffset.z = -20f;
+                cameraTransposerLockWorldUp.m_YawDamping = 1f;
+
+                CMCameraSimpleWorldUp.gameObject.SetActive(false);
+                cameraTransposerSimpleWorldUp.m_FollowOffset.y = 7f;
+                cameraTransposerSimpleWorldUp.m_FollowOffset.z = -20f;
+                cameraTransposerSimpleWorldUp.m_YawDamping = 1f;
+
+                CMCameraActionCam.gameObject.SetActive(false);
+
                 break;
             case 1:
-                cameraTransposer.m_BindingMode = CinemachineOrbitalTransposer.BindingMode.LockToTargetWithWorldUp;
-                cameraTransposer.m_FollowOffset.y = 13f;
-                cameraTransposer.m_FollowOffset.z = -25f;
-                cameraTransposer.m_YawDamping = 1f;
+                CMCameraLockWorldUp.gameObject.SetActive(true);
+                cameraTransposerLockWorldUp.m_FollowOffset.y = 13f;
+                cameraTransposerLockWorldUp.m_FollowOffset.z = -25f;
+                cameraTransposerLockWorldUp.m_YawDamping = 1f;
+
+                CMCameraSimpleWorldUp.gameObject.SetActive(false);
+                cameraTransposerSimpleWorldUp.m_FollowOffset.y = 13f;
+                cameraTransposerSimpleWorldUp.m_FollowOffset.z = -25f;
+                cameraTransposerSimpleWorldUp.m_YawDamping = 1f;
+
+                CMCameraActionCam.gameObject.SetActive(false);
+
                 break;
             case 2:
-                cameraTransposer.m_BindingMode = CinemachineOrbitalTransposer.BindingMode.LockToTargetWithWorldUp;
-                cameraTransposer.m_FollowOffset.y = 16f;
-                cameraTransposer.m_FollowOffset.z = -30f;
-                cameraTransposer.m_YawDamping = 1f;
+                CMCameraLockWorldUp.gameObject.SetActive(true);
+                cameraTransposerLockWorldUp.m_FollowOffset.y = 16f;
+                cameraTransposerLockWorldUp.m_FollowOffset.z = -30f;
+                cameraTransposerLockWorldUp.m_YawDamping = 1f;
+
+                CMCameraSimpleWorldUp.gameObject.SetActive(false);
+                cameraTransposerSimpleWorldUp.m_FollowOffset.y = 16f;
+                cameraTransposerSimpleWorldUp.m_FollowOffset.z = -30f;
+                cameraTransposerSimpleWorldUp.m_YawDamping = 1f;
+
+                CMCameraActionCam.gameObject.SetActive(false);
+
                 break;
             case 3:
-                cameraTransposer.m_BindingMode = CinemachineOrbitalTransposer.BindingMode.SimpleFollowWithWorldUp;
-                cameraTransposer.m_FollowOffset.y = 7f;
-                cameraTransposer.m_FollowOffset.z = -20f;
-                cameraTransposer.m_YawDamping = 0f;
+                CMCameraLockWorldUp.gameObject.SetActive(false);
+                cameraTransposerLockWorldUp.m_FollowOffset.y = 7f;
+                cameraTransposerLockWorldUp.m_FollowOffset.z = -20f;
+                cameraTransposerLockWorldUp.m_YawDamping = 0f;
+
+                CMCameraSimpleWorldUp.gameObject.SetActive(true);
+                cameraTransposerSimpleWorldUp.m_FollowOffset.y = 7f;
+                cameraTransposerSimpleWorldUp.m_FollowOffset.z = -20f;
+                cameraTransposerSimpleWorldUp.m_YawDamping = 0f;
+
+                CMCameraActionCam.gameObject.SetActive(false);
+
                 break;
             case 4:
-                cameraTransposer.m_BindingMode = CinemachineOrbitalTransposer.BindingMode.SimpleFollowWithWorldUp;
-                cameraTransposer.m_FollowOffset.y = 13f;
-                cameraTransposer.m_FollowOffset.z = -25f;
-                cameraTransposer.m_YawDamping = 0f;
+                CMCameraLockWorldUp.gameObject.SetActive(false);
+                cameraTransposerLockWorldUp.m_FollowOffset.y = 13f;
+                cameraTransposerLockWorldUp.m_FollowOffset.z = -25f;
+                cameraTransposerLockWorldUp.m_YawDamping = 0f;
+
+                CMCameraSimpleWorldUp.gameObject.SetActive(true);
+                cameraTransposerSimpleWorldUp.m_FollowOffset.y = 13f;
+                cameraTransposerSimpleWorldUp.m_FollowOffset.z = -25f;
+                cameraTransposerSimpleWorldUp.m_YawDamping = 0f;
+
+                CMCameraActionCam.gameObject.SetActive(false);
+
                 break;
             case 5:
-                cameraTransposer.m_BindingMode = CinemachineOrbitalTransposer.BindingMode.SimpleFollowWithWorldUp;
-                cameraTransposer.m_FollowOffset.y = 16f;
-                cameraTransposer.m_FollowOffset.z = -30f;
-                cameraTransposer.m_YawDamping = 0f;
+                CMCameraLockWorldUp.gameObject.SetActive(false);
+                cameraTransposerLockWorldUp.m_FollowOffset.y = 16f;
+                cameraTransposerLockWorldUp.m_FollowOffset.z = -30f;
+                cameraTransposerLockWorldUp.m_YawDamping = 0f;
+
+                CMCameraSimpleWorldUp.gameObject.SetActive(true);
+                cameraTransposerSimpleWorldUp.m_FollowOffset.y = 16f;
+                cameraTransposerSimpleWorldUp.m_FollowOffset.z = -30f;
+                cameraTransposerSimpleWorldUp.m_YawDamping = 0f;
+
+                CMCameraActionCam.gameObject.SetActive(false);
+
                 break;
         }
 
@@ -333,20 +402,56 @@ public class PauseMenu : MonoBehaviour
     }
     public void CameraFlop(bool inAir) //fixes camera when in air
     {
-        if (inAir)
+        if (inAir || carController.slidingFlag)
         {
-            if (cameraTransposer.m_BindingMode == CinemachineOrbitalTransposer.BindingMode.LockToTargetWithWorldUp)
-            {
-                cameraTransposer.m_BindingMode = CinemachineOrbitalTransposer.BindingMode.SimpleFollowWithWorldUp;
-            }
+            CMCameraLockWorldUp.gameObject.SetActive(false);
+            CMCameraSimpleWorldUp.gameObject.SetActive(true);
+            //if (CMCameraSimpleWorldUp.gameObject.activeInHierarchy == true)
+            //{
+            //    CMCameraLockWorldUp.gameObject.SetActive(false);
+            //    CMCameraSimpleWorldUp.gameObject.SetActive(true);
+            //}
         }
 
-        if (!inAir)
+        if (!inAir && !carController.slidingFlag)
         {
             if (PlayerPrefs.GetInt("cameraIndex") == 0 || PlayerPrefs.GetInt("cameraIndex") == 1 || PlayerPrefs.GetInt("cameraIndex") == 2)
             {
-                cameraTransposer.m_BindingMode = CinemachineTransposer.BindingMode.LockToTargetWithWorldUp;
+                CMCameraLockWorldUp.gameObject.SetActive(true);
+                CMCameraSimpleWorldUp.gameObject.SetActive(false);
             }
+
+            if (PlayerPrefs.GetInt("cameraIndex") == 3 || PlayerPrefs.GetInt("cameraIndex") == 4 || PlayerPrefs.GetInt("cameraIndex") == 5)
+            {
+                CMCameraLockWorldUp.gameObject.SetActive(false);
+                CMCameraSimpleWorldUp.gameObject.SetActive(true);
+            }
+        }
+    }
+    public void CameraActionSwitch()
+    {
+        if (CMCameraActionCam.gameObject.activeInHierarchy == true)
+        {
+            if (PlayerPrefs.GetInt("cameraIndex") == 0 || PlayerPrefs.GetInt("cameraIndex") == 1 || PlayerPrefs.GetInt("cameraIndex") == 2)
+            {
+                CMCameraLockWorldUp.gameObject.SetActive(true);
+                CMCameraSimpleWorldUp.gameObject.SetActive(false);
+            }
+
+            if (PlayerPrefs.GetInt("cameraIndex") == 3 || PlayerPrefs.GetInt("cameraIndex") == 4 || PlayerPrefs.GetInt("cameraIndex") == 5)
+            {
+                CMCameraLockWorldUp.gameObject.SetActive(false);
+                CMCameraSimpleWorldUp.gameObject.SetActive(true);
+            }
+
+            CMCameraActionCam.gameObject.SetActive(false);
+        }
+
+        else if (CMCameraActionCam.gameObject.activeInHierarchy == false)
+        {
+            CMCameraActionCam.gameObject.SetActive(true);
+            CMCameraLockWorldUp.gameObject.SetActive(false);
+            CMCameraSimpleWorldUp.gameObject.SetActive(false);
         }
     }
 

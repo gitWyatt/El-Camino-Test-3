@@ -42,6 +42,10 @@ public class CarBodySelection : MonoBehaviour
     [SerializeField] private Mesh wrxSTIMesh;
     [SerializeField] private Mesh pontiacBonnevilleMesh;
     [SerializeField] private Mesh grandPrixMesh;
+    [SerializeField] private Mesh buickEstateMesh;
+    [SerializeField] private Mesh cadillacHearseMesh;
+    [SerializeField] private Mesh dodgeVanMesh;
+    [SerializeField] private Mesh hoverCarMesh;
 
 
     [SerializeField] private Material elCaminoPaint;
@@ -68,6 +72,10 @@ public class CarBodySelection : MonoBehaviour
     [SerializeField] private Material wrxSTIPaint;
     [SerializeField] private Material pontiacBonnevillePaint;
     [SerializeField] private Material grandPrixPaint;
+    [SerializeField] private Material buickEstatePaint;
+    [SerializeField] private Material cadillacHearsePaint;
+    [SerializeField] private Material dodgeVanPaint;
+    [SerializeField] private Material hoverCarPaint;
 
 
     private void Awake()
@@ -155,6 +163,24 @@ public class CarBodySelection : MonoBehaviour
                 break;
             case 21:
                 SetBodyWRXSTI();
+                break;
+            case 22:
+                SetBodyPontiacBonneville();
+                break;
+            case 23:
+                SetBodyGrandPrix();
+                break;
+            case 24:
+                SetBodyBuickEstate();
+                break;
+            case 25:
+                SetBodyCadillacHearse();
+                break;
+            case 26:
+                SetBodyDodgeVan();
+                break;
+            case 27:
+                SetBodyHoverCar();
                 break;
         }
 
@@ -303,6 +329,31 @@ public class CarBodySelection : MonoBehaviour
         PlayerPrefs.SetInt("bodyIndex", 23);
         carBody.GetComponent<MeshFilter>().mesh = grandPrixMesh;
         carBody.GetComponent<Renderer>().material = grandPrixPaint;
+    }
+    public void SetBodyBuickEstate()
+    {
+        PlayerPrefs.SetInt("bodyIndex", 24);
+        carBody.GetComponent<MeshFilter>().mesh = buickEstateMesh;
+        carBody.GetComponent<Renderer>().material = buickEstatePaint;
+    }
+    public void SetBodyCadillacHearse()
+    {
+        PlayerPrefs.SetInt("bodyIndex", 25);
+        carBody.GetComponent<MeshFilter>().mesh = cadillacHearseMesh;
+        carBody.GetComponent<Renderer>().material = cadillacHearsePaint;
+    }
+    public void SetBodyDodgeVan()
+    {
+        PlayerPrefs.SetInt("bodyIndex", 26);
+        carBody.GetComponent<MeshFilter>().mesh = dodgeVanMesh;
+        carBody.GetComponent<Renderer>().material = dodgeVanPaint;
+    }
+    public void SetBodyHoverCar()
+    {
+        PlayerPrefs.SetInt("bodyIndex", 27);
+        carBody.GetComponent<MeshFilter>().mesh = hoverCarMesh;
+        carBody.GetComponent<Renderer>().material = hoverCarPaint;
+
     }
 }
 

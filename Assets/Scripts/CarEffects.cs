@@ -65,6 +65,14 @@ public class CarEffects : MonoBehaviour
     [SerializeField] public TrailRenderer rightTrailPontiacBonneville;
     [SerializeField] public TrailRenderer leftTrailGrandPrix;
     [SerializeField] public TrailRenderer rightTrailGrandPrix;
+    [SerializeField] public TrailRenderer leftTrailBuickEstate;
+    [SerializeField] public TrailRenderer rightTrailBuickEstate;
+    [SerializeField] public TrailRenderer leftTrailCadillacHearse;
+    [SerializeField] public TrailRenderer rightTrailCadillacHearse;
+    [SerializeField] public TrailRenderer leftTrailDodgeVan;
+    [SerializeField] public TrailRenderer rightTrailDodgeVan;
+    [SerializeField] public TrailRenderer leftTrailHovercar;
+    [SerializeField] public TrailRenderer rightTrailHovercar;
     //[SerializeField] public TrailRenderer leftAkiraTrailCamino;
     //[SerializeField] public TrailRenderer rightAkiraTrailCamino;
     //[SerializeField] public TrailRenderer leftAkiraTrailAE86;
@@ -104,6 +112,10 @@ public class CarEffects : MonoBehaviour
     [SerializeField] public GameObject wRXSTITLGroup;
     [SerializeField] public GameObject pontiacBonnevilleTLGroup;
     [SerializeField] public GameObject grandPrixTLGroup;
+    [SerializeField] public GameObject buickEstateTLGroup;
+    [SerializeField] public GameObject cadillacHearseTLGroup;
+    [SerializeField] public GameObject dodgeVanTLGroup;
+    [SerializeField] public GameObject hovercarTLGroup;
     [Space]
     [Header("Taillights")]
     [SerializeField] public Transform bMWM1TL;
@@ -130,6 +142,10 @@ public class CarEffects : MonoBehaviour
     [SerializeField] public Transform wRXSTITL;
     [SerializeField] public Transform pontiacBonnevilleTL;
     [SerializeField] public Transform grandPrixTL;
+    [SerializeField] public Transform buickEstateTL;
+    [SerializeField] public Transform cadillacHearseTL;
+    [SerializeField] public Transform dodgeVanTL;
+    [SerializeField] public Transform hovercarTL;
     [Space]
 
     public Renderer leftTailLightRenderer;
@@ -173,6 +189,11 @@ public class CarEffects : MonoBehaviour
     [SerializeField] private Mesh wrxSTIMesh;
     [SerializeField] private Mesh pontiacBonnevilleMesh;
     [SerializeField] private Mesh grandPrixMesh;
+    [SerializeField] private Mesh buickEstateMesh;
+    [SerializeField] private Mesh cadillacHearseMesh;
+    [SerializeField] private Mesh dodgeVanMesh;
+    [SerializeField] private Mesh hoverCarMesh;
+    [Space]
     [Space]
     [Header("body paint")]
     [SerializeField] private Material elCaminoPaint;
@@ -199,6 +220,10 @@ public class CarEffects : MonoBehaviour
     [SerializeField] private Material wrxSTIPaint;
     [SerializeField] private Material pontiacBonnevillePaint;
     [SerializeField] private Material grandPrixPaint;
+    [SerializeField] private Material buickEstatePaint;
+    [SerializeField] private Material cadillacHearsePaint;
+    [SerializeField] private Material dodgeVanPaint;
+    [SerializeField] private Material hoverCarPaint;
     [Space]
     [Header("Tire Meshes and Paint")]
     [SerializeField] private Mesh offRoadTireMesh;
@@ -209,6 +234,7 @@ public class CarEffects : MonoBehaviour
     [SerializeField] private Material standardTirePaint;
 
     CarController carController;
+    PauseMenu pauseMenu;
     
     private bool tireMarksFLFlag;
     private bool tireMarksFRFlag;
@@ -355,6 +381,31 @@ public class CarEffects : MonoBehaviour
             backRightTireMarks = backRightRegularTireMarks;
             backLeftFireMarks = backLeftRegularFireMarks;
             backRightFireMarks = backRightRegularFireMarks;
+        }
+
+        if (PlayerPrefs.GetInt("bodyIndex") == 27)
+        {
+            flWheel.GetComponent<MeshRenderer>().enabled = false;
+            frWheel.GetComponent<MeshRenderer>().enabled = false;
+            rlWheel.GetComponent<MeshRenderer>().enabled = false;
+            rrWheel.GetComponent<MeshRenderer>().enabled = false;
+
+            flBigWheel.GetComponent<MeshRenderer>().enabled = false;
+            frBigWheel.GetComponent<MeshRenderer>().enabled = false;
+            rlBigWheel.GetComponent<MeshRenderer>().enabled = false;
+            rrBigWheel.GetComponent<MeshRenderer>().enabled = false;
+        }
+        else
+        {
+            flWheel.GetComponent<MeshRenderer>().enabled = true;
+            frWheel.GetComponent<MeshRenderer>().enabled = true;
+            rlWheel.GetComponent<MeshRenderer>().enabled = true;
+            rrWheel.GetComponent<MeshRenderer>().enabled = true;
+
+            flBigWheel.GetComponent<MeshRenderer>().enabled = true;
+            frBigWheel.GetComponent<MeshRenderer>().enabled = true;
+            rlBigWheel.GetComponent<MeshRenderer>().enabled = true;
+            rrBigWheel.GetComponent<MeshRenderer>().enabled = true;
         }
     }
 
@@ -649,6 +700,30 @@ public class CarEffects : MonoBehaviour
                     rightTrailGrandPrix.emitting = true;
                     akiraTrailFlag = true;
                     break;
+                case 24:
+                    if (akiraTrailFlag) return;
+                    leftTrailBuickEstate.emitting = true;
+                    rightTrailBuickEstate.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 25:
+                    if (akiraTrailFlag) return;
+                    leftTrailCadillacHearse.emitting = true;
+                    rightTrailCadillacHearse.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 26:
+                    if (akiraTrailFlag) return;
+                    leftTrailDodgeVan.emitting = true;
+                    rightTrailDodgeVan.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
+                case 27:
+                    if (akiraTrailFlag) return;
+                    leftTrailHovercar.emitting = true;
+                    rightTrailHovercar.emitting = true;
+                    akiraTrailFlag = true;
+                    break;
                 default:
                     akiraTrailFlag = false;
                     break;
@@ -704,6 +779,14 @@ public class CarEffects : MonoBehaviour
             rightTrailPontiacBonneville.emitting = false;
             leftTrailGrandPrix.emitting = false;
             rightTrailGrandPrix.emitting = false;
+            leftTrailBuickEstate.emitting = false;
+            rightTrailBuickEstate.emitting = false;
+            leftTrailCadillacHearse.emitting = false;
+            rightTrailCadillacHearse.emitting = false;
+            leftTrailDodgeVan.emitting = false;
+            rightTrailDodgeVan.emitting = false;
+            leftTrailHovercar.emitting = false;
+            rightTrailHovercar.emitting = false;
         }
 
         //switch (PlayerPrefs.GetInt("bodyIndex"))
@@ -999,6 +1082,30 @@ public class CarEffects : MonoBehaviour
                 rightTrailGrandPrix.emitting = false;
                 akiraTrailFlag = false;
                 break;
+            case 24:
+
+                leftTrailBuickEstate.emitting = false;
+                rightTrailBuickEstate.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 25:
+
+                leftTrailCadillacHearse.emitting = false;
+                rightTrailCadillacHearse.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 26:
+
+                leftTrailDodgeVan.emitting = false;
+                rightTrailDodgeVan.emitting = false;
+                akiraTrailFlag = false;
+                break;
+            case 27:
+
+                leftTrailHovercar.emitting = false;
+                rightTrailHovercar.emitting = false;
+                akiraTrailFlag = false;
+                break;
             default:
                 akiraTrailFlag = false;
                 break;
@@ -1080,6 +1187,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 1:
                 tailLightRenderer = bMWM3TL.GetComponent<MeshRenderer>();
@@ -1107,6 +1218,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 2:
                 tailLightRenderer = cameroZ28TL.GetComponent<MeshRenderer>();
@@ -1134,6 +1249,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 3:
                 tailLightRenderer = chevyBelAirTL.GetComponent<MeshRenderer>();
@@ -1161,6 +1280,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 4:
                 tailLightRenderer = datsun240ZTL.GetComponent<MeshRenderer>();
@@ -1188,6 +1311,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 5:
                 tailLightRenderer = dodgeHellcatTL.GetComponent<MeshRenderer>();
@@ -1215,6 +1342,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 6:
                 tailLightRenderer = elCaminoTL.GetComponent<MeshRenderer>();
@@ -1242,6 +1373,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 7:
                 tailLightRenderer = ferrariF40TL.GetComponent<MeshRenderer>();
@@ -1269,6 +1404,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 8:
                 tailLightRenderer = ferrariLaferrariTL.GetComponent<MeshRenderer>();
@@ -1296,6 +1435,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 9:
                 tailLightRenderer = fumigatorTL.GetComponent<MeshRenderer>();
@@ -1323,6 +1466,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 10:
                 tailLightRenderer = hondaCivicTL.GetComponent<MeshRenderer>();
@@ -1350,6 +1497,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 11:
                 tailLightRenderer = hondaS2000TL.GetComponent<MeshRenderer>();
@@ -1377,6 +1528,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 12:
                 tailLightRenderer = mazdaRX7TL.GetComponent<MeshRenderer>();
@@ -1404,6 +1559,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 13:
                 tailLightRenderer = mustangShelbyTL.GetComponent<MeshRenderer>();
@@ -1431,6 +1590,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 14:
                 tailLightRenderer = nissan300ZXTL.GetComponent<MeshRenderer>();
@@ -1458,6 +1621,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 15:
                 tailLightRenderer = pontiacGTOTL.GetComponent<MeshRenderer>();
@@ -1485,6 +1652,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 16:
                 tailLightRenderer = porsche918TL.GetComponent<MeshRenderer>();
@@ -1512,6 +1683,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 17:
                 tailLightRenderer = skylineGTRTL.GetComponent<MeshRenderer>();
@@ -1539,6 +1714,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 18:
                 tailLightRenderer = toyotaAE86TL.GetComponent<MeshRenderer>();
@@ -1566,6 +1745,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 19:
                 tailLightRenderer = toyotaMR2TL.GetComponent<MeshRenderer>();
@@ -1593,6 +1776,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 20:
                 tailLightRenderer = toyotaSupraTL.GetComponent<MeshRenderer>();
@@ -1620,6 +1807,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 21:
                 tailLightRenderer = wRXSTITL.GetComponent<MeshRenderer>();
@@ -1647,6 +1838,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(true);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 22:
                 tailLightRenderer = pontiacBonnevilleTL.GetComponent<MeshRenderer>();
@@ -1674,6 +1869,10 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(true);
                 grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
                 break;
             case 23:
                 tailLightRenderer = grandPrixTL.GetComponent<MeshRenderer>();
@@ -1701,6 +1900,134 @@ public class CarEffects : MonoBehaviour
                 wRXSTITLGroup.SetActive(false);
                 pontiacBonnevilleTLGroup.SetActive(false);
                 grandPrixTLGroup.SetActive(true);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
+                break;
+            case 24:
+                tailLightRenderer = buickEstateTL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(true);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
+                break;
+            case 25:
+                tailLightRenderer = cadillacHearseTL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(true);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(false);
+                break;
+            case 26:
+                tailLightRenderer = dodgeVanTL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(true);
+                hovercarTLGroup.SetActive(false);
+                break;
+            case 27:
+                tailLightRenderer = hovercarTL.GetComponent<MeshRenderer>();
+                bMWM1TLGroup.SetActive(false);
+                bMWM3TLGroup.SetActive(false);
+                cameroZ28TLGroup.SetActive(false);
+                chevyBelAirTLGroup.SetActive(false);
+                datsun240ZTLGroup.SetActive(false);
+                dodgeHellcatTLGroup.SetActive(false);
+                elCaminoTLGroup.SetActive(false);
+                ferrariF40TLGroup.SetActive(false);
+                ferrariLaferrariTLGroup.SetActive(false);
+                fumigatorTLGroup.SetActive(false);
+                hondaCivicTLGroup.SetActive(false);
+                hondaS2000TLGroup.SetActive(false);
+                mazdaRX7TLGroup.SetActive(false);
+                mustangShelbyTLGroup.SetActive(false);
+                nissan300ZXTLGroup.SetActive(false);
+                pontiacGTOTLGroup.SetActive(false);
+                porsche918TLGroup.SetActive(false);
+                skylineGTRTLGroup.SetActive(false);
+                toyotaAE86TLGroup.SetActive(false);
+                toyotaMR2TLGroup.SetActive(false);
+                toyotaSupraTLGroup.SetActive(false);
+                wRXSTITLGroup.SetActive(false);
+                pontiacBonnevilleTLGroup.SetActive(false);
+                grandPrixTLGroup.SetActive(false);
+                buickEstateTLGroup.SetActive(false);
+                cadillacHearseTLGroup.SetActive(false);
+                dodgeVanTLGroup.SetActive(false);
+                hovercarTLGroup.SetActive(true);
                 break;
         }
 

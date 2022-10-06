@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1953259897 &8574412962073106934
+TerrainLayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Rock dark
+  m_DiffuseTexture: {fileID: 2800000, guid: c531d5689847a5d40bb78de459bfaae7, type: 3}
+  m_NormalMapTexture: {fileID: 2800000, guid: bcc51d9edb0b7b94eab7579a5a47077f, type: 3}
+  m_MaskMapTexture: {fileID: 2800000, guid: ebebf41c8d7f7aa48a9089193583d7fd, type: 3}
+  m_TileSize: {x: 50, y: 50}
+  m_TileOffset: {x: 0, y: 0}
+  m_Specular: {r: 0, g: 0, b: 0, a: 0}
+  m_Metallic: 0
+  m_Smoothness: 0
+  m_NormalScale: 0.5
+  m_DiffuseRemapMin: {x: 0, y: 0, z: 0, w: 0}
+  m_DiffuseRemapMax: {x: 1, y: 1, z: 1, w: 1}
+  m_MaskMapRemapMin: {x: 0, y: 0, z: 0, w: 0}
+  m_MaskMapRemapMax: {x: 1, y: 1, z: 1, w: 1}

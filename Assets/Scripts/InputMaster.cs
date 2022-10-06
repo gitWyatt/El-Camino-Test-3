@@ -125,6 +125,24 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Stall"",
+                    ""type"": ""Button"",
+                    ""id"": ""02fa5100-6031-476f-8155-f4dc2301bbeb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Camera Lock"",
+                    ""type"": ""Button"",
+                    ""id"": ""3ed094b0-6429-4725-a5c8-11b17cd8a5f5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -490,6 +508,28 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""action"": ""Use item swap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""02a462fb-28c2-4f04-bdf3-04275a9358ba"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Stall"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5fd56277-5001-4228-b471-564fcd43c1c3"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Camera Lock"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -664,6 +704,8 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         m_Player_Camera = m_Player.FindAction("Camera", throwIfNotFound: true);
         m_Player_Passiveitemswap = m_Player.FindAction("Passive item swap", throwIfNotFound: true);
         m_Player_Useitemswap = m_Player.FindAction("Use item swap", throwIfNotFound: true);
+        m_Player_Stall = m_Player.FindAction("Stall", throwIfNotFound: true);
+        m_Player_CameraLock = m_Player.FindAction("Camera Lock", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Directional = m_Menu.FindAction("Directional", throwIfNotFound: true);
@@ -737,6 +779,8 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Camera;
     private readonly InputAction m_Player_Passiveitemswap;
     private readonly InputAction m_Player_Useitemswap;
+    private readonly InputAction m_Player_Stall;
+    private readonly InputAction m_Player_CameraLock;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -752,6 +796,8 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         public InputAction @Camera => m_Wrapper.m_Player_Camera;
         public InputAction @Passiveitemswap => m_Wrapper.m_Player_Passiveitemswap;
         public InputAction @Useitemswap => m_Wrapper.m_Player_Useitemswap;
+        public InputAction @Stall => m_Wrapper.m_Player_Stall;
+        public InputAction @CameraLock => m_Wrapper.m_Player_CameraLock;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -794,6 +840,12 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 @Useitemswap.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseitemswap;
                 @Useitemswap.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseitemswap;
                 @Useitemswap.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseitemswap;
+                @Stall.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStall;
+                @Stall.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStall;
+                @Stall.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStall;
+                @CameraLock.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCameraLock;
+                @CameraLock.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCameraLock;
+                @CameraLock.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCameraLock;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -831,6 +883,12 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 @Useitemswap.started += instance.OnUseitemswap;
                 @Useitemswap.performed += instance.OnUseitemswap;
                 @Useitemswap.canceled += instance.OnUseitemswap;
+                @Stall.started += instance.OnStall;
+                @Stall.performed += instance.OnStall;
+                @Stall.canceled += instance.OnStall;
+                @CameraLock.started += instance.OnCameraLock;
+                @CameraLock.performed += instance.OnCameraLock;
+                @CameraLock.canceled += instance.OnCameraLock;
             }
         }
     }
@@ -899,6 +957,8 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         void OnCamera(InputAction.CallbackContext context);
         void OnPassiveitemswap(InputAction.CallbackContext context);
         void OnUseitemswap(InputAction.CallbackContext context);
+        void OnStall(InputAction.CallbackContext context);
+        void OnCameraLock(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {

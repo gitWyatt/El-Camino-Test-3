@@ -103,6 +103,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Stall",
+                    "type": "Button",
+                    "id": "02fa5100-6031-476f-8155-f4dc2301bbeb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Camera Lock",
+                    "type": "Button",
+                    "id": "3ed094b0-6429-4725-a5c8-11b17cd8a5f5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -466,6 +484,28 @@
                     "processors": "",
                     "groups": "Keyboard and Mouse",
                     "action": "Use item swap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "02a462fb-28c2-4f04-bdf3-04275a9358ba",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Stall",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5fd56277-5001-4228-b471-564fcd43c1c3",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Camera Lock",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
