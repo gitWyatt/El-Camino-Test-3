@@ -80,6 +80,12 @@ public class CarEffects : MonoBehaviour
 
     [SerializeField] public ParticleSystem thruster;
 
+    //hvoercar particles
+    [SerializeField] public ParticleSystem flHover;
+    [SerializeField] public ParticleSystem frHover;
+    [SerializeField] public ParticleSystem rlHover;
+    [SerializeField] public ParticleSystem rrHover;
+
     [SerializeField] public GameObject caminoTailLightGroup;
     [SerializeField] public Transform leftTailLight;
     [SerializeField] public Transform rightTailLight;
@@ -383,6 +389,7 @@ public class CarEffects : MonoBehaviour
             backRightFireMarks = backRightRegularFireMarks;
         }
 
+        //hovercar specials
         if (PlayerPrefs.GetInt("bodyIndex") == 27)
         {
             flWheel.GetComponent<MeshRenderer>().enabled = false;
@@ -394,6 +401,16 @@ public class CarEffects : MonoBehaviour
             frBigWheel.GetComponent<MeshRenderer>().enabled = false;
             rlBigWheel.GetComponent<MeshRenderer>().enabled = false;
             rrBigWheel.GetComponent<MeshRenderer>().enabled = false;
+
+            var flHoverEmission = flHover.emission;
+            var frHoverEmission = frHover.emission;
+            var rlHoverEmission = rlHover.emission;
+            var rrHoverEmission = rrHover.emission;
+
+            flHoverEmission.enabled = true;
+            frHoverEmission.enabled = true;
+            rlHoverEmission.enabled = true;
+            rrHoverEmission.enabled = true;
         }
         else
         {
@@ -406,6 +423,16 @@ public class CarEffects : MonoBehaviour
             frBigWheel.GetComponent<MeshRenderer>().enabled = true;
             rlBigWheel.GetComponent<MeshRenderer>().enabled = true;
             rrBigWheel.GetComponent<MeshRenderer>().enabled = true;
+
+            var flHoverEmission = flHover.emission;
+            var frHoverEmission = frHover.emission;
+            var rlHoverEmission = rlHover.emission;
+            var rrHoverEmission = rrHover.emission;
+
+            flHoverEmission.enabled = false;
+            frHoverEmission.enabled = false;
+            rlHoverEmission.enabled = false;
+            rrHoverEmission.enabled = false;
         }
     }
 
