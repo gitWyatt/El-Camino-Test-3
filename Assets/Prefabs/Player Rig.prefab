@@ -15361,7 +15361,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: -90.00001
+    Value: 90
     m_SpeedMode: 0
     m_MaxSpeed: 300
     m_AccelTime: 0.1
@@ -16304,8 +16304,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 929100493}
-  m_LocalRotation: {x: -0.111654095, y: 0.85650367, z: -0.20844579, w: -0.4587866}
-  m_LocalPosition: {x: 2148.2207, y: -390.19, z: -1128.8026}
+  m_LocalRotation: {x: 0.11165409, y: -0.85650367, z: 0.20844579, w: 0.4587866}
+  m_LocalPosition: {x: 2148.2207, y: -390.19, z: -1128.8025}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16337,7 +16337,7 @@ MonoBehaviour:
     FieldOfView: 60
     OrthographicSize: 5
     NearClipPlane: 0.3
-    FarClipPlane: 1000
+    FarClipPlane: 3000
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
@@ -28676,8 +28676,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1663742057}
-  m_LocalRotation: {x: 0.06274652, y: -0.00017544626, z: 0.000011026858, w: 0.9980295}
-  m_LocalPosition: {x: 2126.0093, y: -391, z: -1168.5927}
+  m_LocalRotation: {x: 0.06274654, y: -0.000024318695, z: 0.0000015310943, w: 0.99802953}
+  m_LocalPosition: {x: 2126.002, y: -391, z: -1168.5925}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -28709,7 +28709,7 @@ MonoBehaviour:
     FieldOfView: 60
     OrthographicSize: 5
     NearClipPlane: 0.3
-    FarClipPlane: 1000
+    FarClipPlane: 3000
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
@@ -44049,8 +44049,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428129086377603201}
-  m_LocalRotation: {x: 0.06274653, y: -0, z: 0.0000000074505797, w: 0.9980295}
-  m_LocalPosition: {x: 2126.0005, y: -391, z: -1168.5927}
+  m_LocalRotation: {x: 0.062746525, y: -0, z: -0, w: 0.9980295}
+  m_LocalPosition: {x: 2126.0005, y: -391, z: -1168.5928}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -44082,7 +44082,7 @@ MonoBehaviour:
     FieldOfView: 60
     OrthographicSize: 5
     NearClipPlane: 0.3
-    FarClipPlane: 1000
+    FarClipPlane: 3000
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
@@ -44251,8 +44251,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428129086589540616}
-  m_LocalRotation: {x: 0.06274653, y: -0, z: 0.0000000074505797, w: 0.9980295}
-  m_LocalPosition: {x: 2126.0005, y: -391, z: -1168.5927}
+  m_LocalRotation: {x: 0.062746525, y: -0, z: -0, w: 0.9980295}
+  m_LocalPosition: {x: 2126.0005, y: -391, z: -1168.5928}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44283,7 +44283,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 3000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -46547,6 +46547,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boostMeter: {fileID: 1612743001}
   pauseMenu: {fileID: 1428129085908563068}
+  carRigidBody: {fileID: 0}
   centerOfMassCenterAir: {fileID: 1428129084899743177}
   centerOfMassCenterGround: {fileID: 2030047997}
   centerOfMassFrontAir: {fileID: 5804693856839994063}
@@ -46554,9 +46555,23 @@ MonoBehaviour:
   centerOfMassRearAir: {fileID: 1738965520164279371}
   centerOfMassRearGround: {fileID: 2826737079475709893}
   centerOfMassCurrent: {fileID: 742756421}
+  horizontalInput: 0
+  verticalInput: 0
+  gas: 0
+  cameraVerticalInput: 0
+  cameraHorizontalInput: 0
+  brakeCheck: 0
+  resetCheck: 0
+  flipCheck: 0
+  engageCheck: 0
+  stallCheck: 0
   isBraking: 0
   isReversing: 0
+  isResetting: 0
+  isFlipping: 0
+  isEngaging: 0
   isCamming: 0
+  isStalling: 0
   wheelColliderGroup: {fileID: 1428129085189163014}
   frontLeftWheelCollider: {fileID: 1428129085900252539}
   frontRightWheelCollider: {fileID: 1428129085242269854}
@@ -46606,6 +46621,7 @@ MonoBehaviour:
   flWheelRigid: {fileID: 919132149045480833}
   brWheelRigid: {fileID: 919132148212854926}
   blWheelRigid: {fileID: 919132147698219682}
+  frontLeftWheelSidewaysFrictionTemp: 99
   suspensionSelection: 0
   bouncySuspensionValue: 4500
   middleSuspensionValue: 5500
@@ -46698,11 +46714,17 @@ MonoBehaviour:
   groundBoostRegen: 0.3
   groundBoostCutoff: 25
   jumpForce: 2000000
+  thatPurpleyColor: {r: 0, g: 0, b: 0, a: 0}
   gearBox: {fileID: 1300120566}
   rpmOutput: {fileID: 1956978505}
   velocityOutput: {fileID: 1035183019}
   speedOutput: {fileID: 1041954121}
   boostCanvasGroup: {fileID: 538585504}
+  spedLerpValue: 0.5
+  prevGear: 0
+  prevERPM: 0
+  prevUnits: 0
+  prevMPH: 0
   camFlopFlag: 1
 --- !u!114 &917927499
 MonoBehaviour:

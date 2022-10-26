@@ -18,42 +18,42 @@ public class CarController : MonoBehaviour
     [Space]
     
     [Header("Center of Masses")]
-    private Rigidbody carRigidBody;
-    public Transform centerOfMassCenterAir;
-    public Transform centerOfMassCenterGround;
-    public Transform centerOfMassFrontAir;
-    public Transform centerOfMassFrontGround;
-    public Transform centerOfMassRearAir;
-    public Transform centerOfMassRearGround;
-    public Transform centerOfMassCurrent;
+    [SerializeField] private Rigidbody carRigidBody;
+    [SerializeField] public Transform centerOfMassCenterAir;
+    [SerializeField] public Transform centerOfMassCenterGround;
+    [SerializeField] public Transform centerOfMassFrontAir;
+    [SerializeField] public Transform centerOfMassFrontGround;
+    [SerializeField] public Transform centerOfMassRearAir;
+    [SerializeField] public Transform centerOfMassRearGround;
+    [SerializeField] public Transform centerOfMassCurrent;
     [Space]
     
     CarBodySelection carBodySelection;
     [Space]
     
     [Header("Inputs")]
-    private float horizontalInput;
-    private float verticalInput;
-    private float gas;
-    private float cameraVerticalInput;
-    private float cameraHorizontalInput;
+    [SerializeField] private float horizontalInput;
+    [SerializeField] private float verticalInput;
+    [SerializeField] private float gas;
+    [SerializeField] private float cameraVerticalInput;
+    [SerializeField] private float cameraHorizontalInput;
     [Space]
-    
-    private float brakeCheck;
-    private float resetCheck;
-    private float flipCheck;
-    private float engageCheck;
-    private float stallCheck;
+
+    [SerializeField] private float brakeCheck;
+    [SerializeField] private float resetCheck;
+    [SerializeField] private float flipCheck;
+    [SerializeField] private float engageCheck;
+    [SerializeField] private float stallCheck;
     [Space]
     
     [Header("Input Checks")]
-    public bool isBraking;
-    public bool isReversing;
-    private bool isResetting;
-    private bool isFlipping;
-    private bool isEngaging;
-    public bool isCamming;
-    private bool isStalling;
+    [SerializeField] public bool isBraking;
+    [SerializeField] public bool isReversing;
+    [SerializeField] private bool isResetting;
+    [SerializeField] private bool isFlipping;
+    [SerializeField] private bool isEngaging;
+    [SerializeField] public bool isCamming;
+    [SerializeField] private bool isStalling;
     [Space]
 
     [Header("Wheel Collider Handles")]
@@ -89,12 +89,12 @@ public class CarController : MonoBehaviour
     [Space]
 
     [Header("Ground hit checks")]
-    public bool touchingGround;
+    [SerializeField] public bool touchingGround;
     public bool flTouchingGround;
     public bool frTouchingGround;
     public bool blTouchingGround;
     public bool brTouchingGround;
-    public bool slidingFlag;
+    [SerializeField] public bool slidingFlag;
     public bool flSlidingFlag;
     public bool frSlidingFlag;
     public bool blSlidingFlag;
@@ -116,7 +116,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private GameObject blWheelRigid;
     [Space]
 
-    [Header("temp friction values")]
+    [SerializeField][Header("temp friction values")]
     float frontLeftWheelSidewaysFrictionTemp = 99;
     float frontLeftWheelForwardFrictionTemp = 99;
     float frontRightWheelSidewaysFrictionTemp = 99;
@@ -243,7 +243,7 @@ public class CarController : MonoBehaviour
     [Space]
 
     [Header("Rotation Values")]
-    public float stallCounter = 40f;
+    [SerializeField] public float stallCounter = 40f;
     [SerializeField] private float controlPitchFactor;
     [SerializeField] private float controlYawFactor;
     [SerializeField] private float controlRollFactor;
@@ -282,13 +282,18 @@ public class CarController : MonoBehaviour
     [Space]
 
     [Header("Speedometer Values")]
-    Color thatPurpleyColor;
+    [SerializeField] Color thatPurpleyColor;
     double mph;
     [SerializeField] public Text gearBox;
     [SerializeField] public Text rpmOutput;
     [SerializeField] public Text velocityOutput;
     [SerializeField] public Text speedOutput;
     [SerializeField] public CanvasGroup boostCanvasGroup;
+    [SerializeField] public float spedLerpValue;
+    public float prevGear = 0;
+    public float prevERPM = 0;
+    public float prevUnits = 0;
+    public float prevMPH = 0;
     [Space]
 
     [Header("Camera Values")]
@@ -314,7 +319,7 @@ public class CarController : MonoBehaviour
         //carRigidBody.centerOfMass = centerOfMassGround.localPosition;
         carRigidBody.centerOfMass = centerOfMassCurrent.localPosition;
 
-        carBodySelection.BodyCheck();
+        //carBodySelection.BodyCheck();
     }
 
     private void OnEnable()
@@ -1656,10 +1661,25 @@ public class CarController : MonoBehaviour
         //kph = carRigidBody.velocity.magnitude * 3.6;      //calculate accurate kph
 
         //output speedometer values
-        gearBox.text = "Gear: " + currentGear.ToString();
-        rpmOutput.text = "eRPM: " + engineRPM.ToString("F0");
-        velocityOutput.text = "Units: " + carVelocity.magnitude.ToString("F0");
-        speedOutput.text = "MPH: " + mph.ToString("F0");
+        float newGear = Mathf.Lerp(prevGear, currentGear, spedLerpValue);
+        float newERPM = Mathf.Lerp(prevERPM, engineRPM, spedLerpValue);
+        float newUnits = Mathf.Lerp(prevUnits, carVelocity.magnitude, spedLerpValue);
+        float newMPH = Mathf.Lerp(prevMPH, (float)mph, spedLerpValue);
+
+        gearBox.text = "Gear: " + newGear.ToString("F0");
+        rpmOutput.text = "eRPM: " + newERPM.ToString("F0");
+        velocityOutput.text = "Units: " + newUnits.ToString("F0");
+        speedOutput.text = "MPH: " + newMPH.ToString("F0");
+
+        //gearBox.text = "Gear: " + currentGear.ToString();
+        //rpmOutput.text = "eRPM: " + engineRPM.ToString("F0");
+        //velocityOutput.text = "Units: " + carVelocity.magnitude.ToString("F0");
+        //speedOutput.text = "MPH: " + mph.ToString("F0");
+
+        prevGear = newGear;
+        prevERPM = newERPM;
+        prevUnits = newUnits;
+        prevMPH = newMPH;
 
         //handle boost bar
         if (useButtonSelection == 0 || useButtonSelection == 1)
