@@ -121,6 +121,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Boost",
+                    "type": "Button",
+                    "id": "60f3db3f-029b-45fa-83d9-c3225c29682f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Boost swap",
+                    "type": "Button",
+                    "id": "a898a4a3-8c85-4199-bf56-22aa553845c6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -413,7 +431,7 @@
                 {
                     "name": "",
                     "id": "b2ddeaf5-45db-4969-a363-1c276bb8b5d6",
-                    "path": "<Gamepad>/leftShoulder",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -506,6 +524,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Camera Lock",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "caf34455-c7a8-4725-b764-6eb9b69d4bb8",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Boost",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "02331a3c-b875-4f70-b760-77d4fd537995",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Boost swap",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

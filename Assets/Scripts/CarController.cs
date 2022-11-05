@@ -44,6 +44,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private float flipCheck;
     [SerializeField] private float engageCheck;
     [SerializeField] private float stallCheck;
+    [SerializeField] private float boostCheck;
     [Space]
     
     [Header("Input Checks")]
@@ -54,6 +55,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private bool isEngaging;
     [SerializeField] public bool isCamming;
     [SerializeField] private bool isStalling;
+    [SerializeField] private bool isBoosting;
     [Space]
 
     [Header("Wheel Collider Handles")]
@@ -256,6 +258,18 @@ public class CarController : MonoBehaviour
 
     [Header("Use Button Values")]
     [SerializeField] public int useButtonSelection;
+    [SerializeField] public int boostButtonSelection;
+    public bool wingsOpen = false;
+    [Space]
+    [Header("Flux Capacitor")]
+    [SerializeField] public bool fluxing = false;
+    public bool fluxFlag = false;
+    public float playerFluxFuel = 100f;
+    [SerializeField] private float fluxForce;
+    [SerializeField] private float maxFluxFuel = 100f;
+    [SerializeField] private float fluxDrain;
+    [SerializeField] private float fluxRegen;
+    [SerializeField] private float fluxCutoff;
     [Space]
     [Header("Air Thruster")]
     [SerializeField] public bool airBoosting = false;
@@ -341,7 +355,8 @@ public class CarController : MonoBehaviour
         HandleSteering();
         HandleRotation();
         HandlePassive();
-        HandleUseButton(); //sloppy becuase of new input system
+        HandleUseButtonOnUpdate(); //sloppy becuase of new input system
+        HandleBoostButton();
         HandleSpeedometer();
         HandleCamera();
         UpdateWheels();
@@ -361,12 +376,14 @@ public class CarController : MonoBehaviour
         brakeCheck = controls.Player.Handbrake.ReadValue<float>();
         resetCheck = controls.Player.Reset.ReadValue<float>();
         flipCheck = controls.Player.Flip.ReadValue<float>();
-        controls.Player.Engage.performed += EngageHandler;
+        controls.Player.Engage.performed += UseButtonHandler;
         engageCheck = controls.Player.Engage.ReadValue<float>();
         controls.Player.Passiveitemswap.performed += HandleSwitching;
         controls.Player.Useitemswap.performed += HandleSwitching;
+        controls.Player.Boostswap.performed += HandleSwitching;
         controls.Player.Pause.performed += PauseHandler;
         stallCheck = controls.Player.Stall.ReadValue<float>();
+        boostCheck = controls.Player.Boost.ReadValue<float>();
 
         if (brakeCheck > .5)
         { isBraking = true; }
@@ -395,6 +412,10 @@ public class CarController : MonoBehaviour
         if (stallCheck > .5)
         { isStalling = true; }
         else { isStalling = false; }
+
+        if (boostCheck > .5)
+        { isBoosting = true; }
+        else { isBoosting = false; }
     }
 
     void CheckGround()
@@ -1405,9 +1426,12 @@ public class CarController : MonoBehaviour
             }
         }
 
-
+        //moves center of mass to center of volume, rather than like 20 feet below the ground
         if (touchingGround == false)
         {
+            //limit rotation speed in air
+            carRigidBody.maxAngularVelocity = 4.5f;
+
             if (frontWheelDrive && !rearWheelDrive)
             {
                 centerOfMassCurrent.localPosition = Vector3.Lerp(centerOfMassCurrent.localPosition, centerOfMassFrontAir.localPosition, 0.1f);
@@ -1421,8 +1445,6 @@ public class CarController : MonoBehaviour
                 centerOfMassCurrent.localPosition = Vector3.Lerp(centerOfMassCurrent.localPosition, centerOfMassCenterAir.localPosition, 0.1f);
             }
 
-            //carRigidBody.centerOfMass = centerOfMassAir.localPosition;
-
             float pitch;
             float yaw;
             float roll;
@@ -1430,14 +1452,8 @@ public class CarController : MonoBehaviour
             if (isBraking == false)
             {
                 pitch = transform.rotation.x + verticalInput * controlPitchFactor;
-                if (gas < 0)
-                {
-                    yaw = transform.rotation.y + -horizontalInput * controlYawFactor;
-                }
-                else
-                {
-                    yaw = transform.rotation.y + horizontalInput * controlYawFactor;
-                }
+                yaw = transform.rotation.y + horizontalInput * controlYawFactor;
+
                 //yaw = transform.rotation.y + horizontalInput * controlYawFactor;
                 carRigidBody.AddRelativeTorque(Vector3.right * pitch);
                 carRigidBody.AddRelativeTorque(Vector3.up * yaw);
@@ -1451,7 +1467,13 @@ public class CarController : MonoBehaviour
             }
         }
 
-        //big test right here
+        //remove rotation speed limit on ground
+        if (flTouchingGround || frTouchingGround || blTouchingGround || brTouchingGround)
+        {
+            carRigidBody.maxAngularVelocity = 7;
+        }
+
+        //return center of mass to below the ground
         if (touchingGround)
         {
             if (frontWheelDrive && !rearWheelDrive)
@@ -1470,94 +1492,7 @@ public class CarController : MonoBehaviour
     }
     private void HandlePassive()
     {
-        if (passiveSelection == 1) //flight wings
-        {
-            float velocity = Vector3.Dot(carRigidBody.velocity, transform.forward);
-
-            if (carRigidBody.velocity.magnitude >= 50f && Vector3.Dot(carRigidBody.velocity, transform.forward) > -.9f && Physics.Raycast(transform.position, Vector3.down, 200f))
-            {
-                carRigidBody.useGravity = false;
-                carRigidBody.AddForce(0, -10000, 0); //false gravity
-                Vector3 newDirection = carRigidBody.velocity.normalized;
-
-                Vector3 nonGlobalUpwardVector = transform.up;
-                nonGlobalUpwardVector.y = 0;
-
-                float carBackwardAngle = transform.forward.y;
-                if (carBackwardAngle > .2f)
-                {
-                    carBackwardAngle = .2f;
-                }
-                if (carBackwardAngle > 0f) // tilt back
-                {
-                    carRigidBody.AddForce(transform.up * velocity * flightGravity * carBackwardAngle);
-                }
-
-                //test, generic upwards force dependent from velocity independent from angle
-                float velocityCapped = velocity;
-                if (velocityCapped >= 100f)
-                {
-                    velocityCapped = 100f;
-                }
-                carRigidBody.AddForce(transform.up * velocityCapped * flightGravity * .15f);
-
-                float carForwardAngle = transform.forward.y;
-                if (carForwardAngle < -.5f)
-                {
-                    carForwardAngle = -.5f;
-                }
-                if (carForwardAngle < 0f) // tilt forward
-                {
-                    carRigidBody.AddForce(transform.forward * velocity * flightGravity * -carForwardAngle);
-                }
-
-                float carRollAngle = carRigidBody.transform.eulerAngles.z;
-
-                if (carRollAngle > 80f && carRollAngle < 180f)
-                {
-                    carRollAngle = 80f;
-                }
-                if (carRollAngle < 280f && carRollAngle > 180f)
-                {
-                    carRollAngle = 280f;
-                }
-
-
-                if (carRollAngle > 15f) // roll side to side
-                {
-                    carRigidBody.AddForce(nonGlobalUpwardVector * velocity * flightGravity * (carRollAngle * .002f));
-                }
-                if (carRollAngle < 345f) // roll side to side
-                {
-                    carRigidBody.AddForce(nonGlobalUpwardVector * velocity * flightGravity * ((360f - carRollAngle) * .002f));
-                }
-
-            }
-            else
-            {
-                carRigidBody.useGravity = true;
-            }
-
-            //handle wing animations
-            if (carRigidBody.velocity.magnitude >= 50f)
-            {
-                if (carEffects.wingsOpen == false)
-                {
-                    carEffects.AnimateWingsOpen();
-                }
-            }
-
-            if (carRigidBody.velocity.magnitude < 50f)
-            {
-                if (carEffects.wingsOpen == true)
-                {
-                    carEffects.AnimateWingsClose();
-                }
-
-            }
-        }
-
-        if (passiveSelection == 2) //big wheels
+        if (passiveSelection == 1) //big wheels
         {
             regularWheelGroup.SetActive(false);
             bigWheelGroup.SetActive(true);
@@ -1588,10 +1523,101 @@ public class CarController : MonoBehaviour
             backRightWheelTransform = backRightRegularWheelTransform;
         }
     }
-    public void HandleUseButton()
+    public void HandleUseButtonOnUpdate()
     {
+        if (wingsOpen == true)
+        {
+            float velocity = Vector3.Dot(carRigidBody.velocity, transform.forward);
+
+            //carRigidBody.useGravity = false;
+            //carRigidBody.AddForce(0, -10000, 0); //false gravity
+            Vector3 newDirection = carRigidBody.velocity.normalized;
+
+            Vector3 nonGlobalUpwardVector = transform.up;
+            nonGlobalUpwardVector.y = 0;
+
+            float carBackwardAngle = transform.forward.y;
+
+            if (carBackwardAngle > .2f)
+            {
+                carBackwardAngle = .2f;
+            }
+            if (carBackwardAngle > 0f) // gain height from tilting back
+            {
+                carRigidBody.AddForce(transform.up * velocity * flightGravity * carBackwardAngle * .2f);
+            }
+
+            //test, generic upwards force dependent from velocity independent from angle
+            float velocityCapped = velocity;
+            if (velocityCapped >= 100f)
+            {
+                velocityCapped = 100f;
+            }
+            carRigidBody.AddForce(transform.up * velocityCapped * flightGravity);
+
+            //adjust height from angle
+            float carForwardAngle = transform.forward.y;
+            if (carForwardAngle < -.5f)
+            {
+                carForwardAngle = -.5f;
+            }
+            if (carForwardAngle < 0f) // gain speed and lose height from tilting forward
+            {
+                carRigidBody.AddForce(transform.forward * velocity * flightGravity * -carForwardAngle * .05f);
+            }
+
+            //cap rolling left and right
+            float carRollAngle = carRigidBody.transform.eulerAngles.z;
+            if (carRollAngle > 80f && carRollAngle < 180f)
+            {
+                carRollAngle = 80f;
+            }
+            if (carRollAngle < 280f && carRollAngle > 180f)
+            {
+                carRollAngle = 280f;
+            }
+
+            //add force according to left and right rolling
+            if (carRollAngle > 15f) // roll side to side
+            {
+                carRigidBody.AddForce(nonGlobalUpwardVector * velocity * flightGravity * (carRollAngle * .002f) * .3f);
+            }
+            if (carRollAngle < 345f) // roll side to side
+            {
+                carRigidBody.AddForce(nonGlobalUpwardVector * velocity * flightGravity * ((360f - carRollAngle) * .002f) * .3f);
+            }
+
+            //airbrake
+            if (isReversing == true && touchingGround == false && velocity > 0f)
+            {
+                carRigidBody.AddForce(-transform.forward * 50000f);
+            }
+        }
+    }
+    public void HandleBoostButton()
+    {
+        //Flux boosting
+        if (boostButtonSelection == 3 && controls.Player.Boost.ReadValue<float>() > 0 && playerFluxFuel > 0 && fluxFlag)
+        {
+            carRigidBody.AddForce(transform.forward * fluxForce);
+            playerFluxFuel -= fluxDrain;
+            fluxing = true;
+        }
+        else
+        {
+            if (playerFluxFuel <= maxFluxFuel)
+            {
+                if (playerFluxFuel <= fluxCutoff) { fluxFlag = false; }
+                else { fluxFlag = true; }
+
+                playerFluxFuel += fluxRegen;
+            }
+
+            fluxing = false;
+        }
+
         //Air thruster
-        if (useButtonSelection == 2 && controls.Player.Engage.ReadValue<float>() > 0 && playerAirThrusterFuel > 0 && airThrusterFlag)
+        if (boostButtonSelection == 2 && controls.Player.Boost.ReadValue<float>() > 0 && playerAirThrusterFuel > 0 && airThrusterFlag)
         {
             carRigidBody.AddForce(transform.forward * thrusterForce);
             playerAirThrusterFuel -= airThrusterDrain;
@@ -1618,7 +1644,7 @@ public class CarController : MonoBehaviour
         }
 
         //Ground booster
-        if (useButtonSelection == 3 && controls.Player.Engage.ReadValue<float>() > 0 && playerGroundBoostFuel > 0 && groundBoostFlag)
+        if (boostButtonSelection == 1 && controls.Player.Boost.ReadValue<float>() > 0 && playerGroundBoostFuel > 0 && groundBoostFlag)
         {
             if (touchingGround)
             {
@@ -1682,11 +1708,20 @@ public class CarController : MonoBehaviour
         prevMPH = newMPH;
 
         //handle boost bar
-        if (useButtonSelection == 0 || useButtonSelection == 1)
+        if (boostButtonSelection == 3)
         {
-            boostCanvasGroup.alpha = 0;
+            boostCanvasGroup.alpha = 1;
+            boostMeter.fillAmount = playerFluxFuel / maxFluxFuel;
+            if (playerFluxFuel <= fluxCutoff)
+            {
+                boostMeter.color = Color.red;
+            }
+            else
+            {
+                boostMeter.color = thatPurpleyColor;
+            }
         }
-        if (useButtonSelection == 2)
+        if (boostButtonSelection == 2)
         {
             boostCanvasGroup.alpha = 1;
             boostMeter.fillAmount = playerAirThrusterFuel / maxAirThrusterFuel;
@@ -1699,7 +1734,7 @@ public class CarController : MonoBehaviour
                 boostMeter.color = thatPurpleyColor;
             }
         }
-        if (useButtonSelection == 3)
+        if (boostButtonSelection == 1)
         {
             boostCanvasGroup.alpha = 1;
             boostMeter.fillAmount = playerGroundBoostFuel / maxGroundBoostFuel;
@@ -1711,6 +1746,10 @@ public class CarController : MonoBehaviour
             {
                 boostMeter.color = thatPurpleyColor;
             }
+        }
+        if (boostButtonSelection == 0)
+        {
+            boostCanvasGroup.alpha = 0;
         }
     }
     private void HandleCamera()  //fixes camera when in air
@@ -1771,27 +1810,142 @@ public class CarController : MonoBehaviour
     {
         pauseMenu.OnPause();
     }
-    public void EngageHandler(InputAction.CallbackContext context)
+    public void UseButtonHandler(InputAction.CallbackContext context)
     {
         //Jump jacks
         if (useButtonSelection == 1)
         {
             carEffects.AnimateJump();
 
-            if (touchingGround)
+            if (flTouchingGround || frTouchingGround || blTouchingGround || brTouchingGround || slidingFlag)
             {
                 carRigidBody.AddForce(transform.up * jumpForce);
                 carRigidBody.AddForce(transform.forward * (jumpForce / 10));
             }
         }
+
+        //Wings
+        if (useButtonSelection == 2)
+        {
+            HandleWings(wingsOpen);
+
+            //dummy wings
+            {
+                //if (useButtonSelection == 3)
+                //{
+                //    float velocity = Vector3.Dot(carRigidBody.velocity, transform.forward);
+
+                //    if (carRigidBody.velocity.magnitude >= 50f && Vector3.Dot(carRigidBody.velocity, transform.forward) > -.9f && Physics.Raycast(transform.position, Vector3.down, 200f))
+                //    {
+                //        carRigidBody.useGravity = false;
+                //        carRigidBody.AddForce(0, -10000, 0); //false gravity
+                //        Vector3 newDirection = carRigidBody.velocity.normalized;
+
+                //        Vector3 nonGlobalUpwardVector = transform.up;
+                //        nonGlobalUpwardVector.y = 0;
+
+                //        float carBackwardAngle = transform.forward.y;
+                //        if (carBackwardAngle > .2f)
+                //        {
+                //            carBackwardAngle = .2f;
+                //        }
+                //        if (carBackwardAngle > 0f) // tilt back
+                //        {
+                //            carRigidBody.AddForce(transform.up * velocity * flightGravity * carBackwardAngle);
+                //        }
+
+                //        //test, generic upwards force dependent from velocity independent from angle
+                //        float velocityCapped = velocity;
+                //        if (velocityCapped >= 100f)
+                //        {
+                //            velocityCapped = 100f;
+                //        }
+                //        carRigidBody.AddForce(transform.up * velocityCapped * flightGravity * .15f);
+
+                //        float carForwardAngle = transform.forward.y;
+                //        if (carForwardAngle < -.5f)
+                //        {
+                //            carForwardAngle = -.5f;
+                //        }
+                //        if (carForwardAngle < 0f) // tilt forward
+                //        {
+                //            carRigidBody.AddForce(transform.forward * velocity * flightGravity * -carForwardAngle);
+                //        }
+
+                //        float carRollAngle = carRigidBody.transform.eulerAngles.z;
+
+                //        if (carRollAngle > 80f && carRollAngle < 180f)
+                //        {
+                //            carRollAngle = 80f;
+                //        }
+                //        if (carRollAngle < 280f && carRollAngle > 180f)
+                //        {
+                //            carRollAngle = 280f;
+                //        }
+
+
+                //        if (carRollAngle > 15f) // roll side to side
+                //        {
+                //            carRigidBody.AddForce(nonGlobalUpwardVector * velocity * flightGravity * (carRollAngle * .002f));
+                //        }
+                //        if (carRollAngle < 345f) // roll side to side
+                //        {
+                //            carRigidBody.AddForce(nonGlobalUpwardVector * velocity * flightGravity * ((360f - carRollAngle) * .002f));
+                //        }
+
+                //    }
+                //    else
+                //    {
+                //        carRigidBody.useGravity = true;
+                //    }
+
+                //    //handle wing animations
+                //    if (carRigidBody.velocity.magnitude >= 50f)
+                //    {
+                //        if (carEffects.wingsOpen == false)
+                //        {
+                //            carEffects.AnimateWingsOpen();
+                //        }
+                //    }
+
+                //    if (carRigidBody.velocity.magnitude < 50f)
+                //    {
+                //        if (carEffects.wingsOpen == true)
+                //        {
+                //            carEffects.AnimateWingsClose();
+                //        }
+
+                //    }
+                //}
+            }
+        }
     }
+    public void HandleWings(bool areWingsOpen)
+    {
+        if (areWingsOpen == false)
+        {
+            wingsOpen = true;
+
+            carEffects.AnimateWingsOpen();
+        }
+
+        if (areWingsOpen == true)
+        {
+            wingsOpen = false;
+
+            carEffects.AnimateWingsClose();
+
+            //carRigidBody.useGravity = true;
+        }
+    }
+
     private void HandleSwitching(InputAction.CallbackContext context) //for swapping equipment without needing to pause the game first
     {
         if (controls.Player.Passiveitemswap.ReadValue<float>() > .5 && Time.timeScale > 0.1) //timescale is kinda hacky to use
         {
             PlayerPrefs.SetInt("passiveIndex", (PlayerPrefs.GetInt("passiveIndex") + 1));
 
-            if (PlayerPrefs.GetInt("passiveIndex") == 3) //this is whats gonna need updated
+            if (PlayerPrefs.GetInt("passiveIndex") == 2) //this is whats gonna need updated
             {
                 PlayerPrefs.SetInt("passiveIndex", 0);
             }
@@ -1805,13 +1959,33 @@ public class CarController : MonoBehaviour
         {
             PlayerPrefs.SetInt("useButtonIndex", (PlayerPrefs.GetInt("useButtonIndex") + 1));
 
-            if (PlayerPrefs.GetInt("useButtonIndex") == 4) //this also, thank me later
+            if (PlayerPrefs.GetInt("useButtonIndex") == 3) //this also, thank me later
             {
                 PlayerPrefs.SetInt("useButtonIndex", 0);
             }
 
+            //fix wings and gravity when navigating away without disengaging
+            if (PlayerPrefs.GetInt("useButtonIndex") != 2)
+            {
+                HandleWings(true);
+            }
+
             pauseMenu.SetUseButton(PlayerPrefs.GetInt("useButtonIndex"));
             pauseMenu.UseButtonDropDown.value = PlayerPrefs.GetInt("useButtonIndex");
+
+        }
+
+        if (controls.Player.Boostswap.ReadValue<float>() > .5 && Time.timeScale > 0.1)  //lol i did it again
+        {
+            PlayerPrefs.SetInt("boostButtonIndex", (PlayerPrefs.GetInt("boostButtonIndex") + 1));
+
+            if (PlayerPrefs.GetInt("boostButtonIndex") == 4) //this also, thank me later
+            {
+                PlayerPrefs.SetInt("boostButtonIndex", 0);
+            }
+
+            pauseMenu.SetBoostButton(PlayerPrefs.GetInt("boostButtonIndex"));
+            pauseMenu.BoostButtonDropDown.value = PlayerPrefs.GetInt("boostButtonIndex");
 
         }
     }

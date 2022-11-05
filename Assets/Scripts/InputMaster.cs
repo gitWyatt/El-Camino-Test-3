@@ -143,6 +143,24 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Boost"",
+                    ""type"": ""Button"",
+                    ""id"": ""60f3db3f-029b-45fa-83d9-c3225c29682f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Boost swap"",
+                    ""type"": ""Button"",
+                    ""id"": ""a898a4a3-8c85-4199-bf56-22aa553845c6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -435,7 +453,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b2ddeaf5-45db-4969-a363-1c276bb8b5d6"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -528,6 +546,28 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Camera Lock"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""caf34455-c7a8-4725-b764-6eb9b69d4bb8"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Boost"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""02331a3c-b875-4f70-b760-77d4fd537995"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Boost swap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -706,6 +746,8 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         m_Player_Useitemswap = m_Player.FindAction("Use item swap", throwIfNotFound: true);
         m_Player_Stall = m_Player.FindAction("Stall", throwIfNotFound: true);
         m_Player_CameraLock = m_Player.FindAction("Camera Lock", throwIfNotFound: true);
+        m_Player_Boost = m_Player.FindAction("Boost", throwIfNotFound: true);
+        m_Player_Boostswap = m_Player.FindAction("Boost swap", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Directional = m_Menu.FindAction("Directional", throwIfNotFound: true);
@@ -781,6 +823,8 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Useitemswap;
     private readonly InputAction m_Player_Stall;
     private readonly InputAction m_Player_CameraLock;
+    private readonly InputAction m_Player_Boost;
+    private readonly InputAction m_Player_Boostswap;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -798,6 +842,8 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         public InputAction @Useitemswap => m_Wrapper.m_Player_Useitemswap;
         public InputAction @Stall => m_Wrapper.m_Player_Stall;
         public InputAction @CameraLock => m_Wrapper.m_Player_CameraLock;
+        public InputAction @Boost => m_Wrapper.m_Player_Boost;
+        public InputAction @Boostswap => m_Wrapper.m_Player_Boostswap;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -846,6 +892,12 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 @CameraLock.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCameraLock;
                 @CameraLock.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCameraLock;
                 @CameraLock.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCameraLock;
+                @Boost.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBoost;
+                @Boost.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBoost;
+                @Boost.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBoost;
+                @Boostswap.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBoostswap;
+                @Boostswap.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBoostswap;
+                @Boostswap.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBoostswap;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -889,6 +941,12 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 @CameraLock.started += instance.OnCameraLock;
                 @CameraLock.performed += instance.OnCameraLock;
                 @CameraLock.canceled += instance.OnCameraLock;
+                @Boost.started += instance.OnBoost;
+                @Boost.performed += instance.OnBoost;
+                @Boost.canceled += instance.OnBoost;
+                @Boostswap.started += instance.OnBoostswap;
+                @Boostswap.performed += instance.OnBoostswap;
+                @Boostswap.canceled += instance.OnBoostswap;
             }
         }
     }
@@ -959,6 +1017,8 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         void OnUseitemswap(InputAction.CallbackContext context);
         void OnStall(InputAction.CallbackContext context);
         void OnCameraLock(InputAction.CallbackContext context);
+        void OnBoost(InputAction.CallbackContext context);
+        void OnBoostswap(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {

@@ -48,6 +48,7 @@ public class PauseMenu : MonoBehaviour
 
     public TMPro.TMP_Dropdown PassiveDropDown;
     public TMPro.TMP_Dropdown UseButtonDropDown;
+    public TMPro.TMP_Dropdown BoostButtonDropDown;
 
     public int fpsCheck = 60;
 
@@ -64,6 +65,7 @@ public class PauseMenu : MonoBehaviour
     public int handbrake;
     public int passive;
     public int useButton;
+    public int boostButton;
 
     private void Awake()
     {
@@ -164,6 +166,9 @@ public class PauseMenu : MonoBehaviour
 
         useButton = PlayerPrefs.GetInt("useButtonIndex", 0);
         UseButtonDropDown.value = useButton;
+
+        boostButton = PlayerPrefs.GetInt("boostButtonIndex", 0);
+        BoostButtonDropDown.value = boostButton;
 
         CheckPlayerChoices();
         //Debug.Log(fps);
@@ -607,9 +612,6 @@ public class PauseMenu : MonoBehaviour
             case 1:
                 carController.passiveSelection = 1;
                 break;
-            case 2:
-                carController.passiveSelection = 2;
-                break;
         }
 
         PlayerPrefs.SetInt("passiveIndex", passiveIndex);
@@ -627,15 +629,30 @@ public class PauseMenu : MonoBehaviour
             case 2:
                 carController.useButtonSelection = 2;
                 break;
-            case 3:
-                carController.useButtonSelection = 3;
-                break;
         }
 
         PlayerPrefs.SetInt("useButtonIndex", useButtonIndex);
     }
+    public void SetBoostButton(int boostButtonIndex)
+    {
+        switch (boostButtonIndex)
+        {
+            case 0:
+                carController.boostButtonSelection = 0;
+                break;
+            case 1:
+                carController.boostButtonSelection = 1;
+                break;
+            case 2:
+                carController.boostButtonSelection = 2;
+                break;
+            case 3:
+                carController.boostButtonSelection = 3;
+                break;
+        }
 
-
+        PlayerPrefs.SetInt("boostButtonIndex", boostButtonIndex);
+    }
     public void SetQuality(int qualityIndex)
     {        
         QualitySettings.SetQualityLevel(qualityIndex);
